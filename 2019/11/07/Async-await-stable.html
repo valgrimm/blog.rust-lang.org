@@ -118,7 +118,7 @@ in November that supports async-await syntax;</li>
 <li>the <a href="https://async.rs/">async-std</a> runtime <a href="https://github.com/async-rs/async-std/releases">has been putting out weekly releases for the past few months</a>, and plans to make their
 1.0 release shortly after async-await hits stable;</li>
 <li>using <a href="https://docs.rs/crate/wasm-bindgen-futures/0.2.16">wasm-bindgen-futures</a>, you can even bridge Rust Futures with
-[JavaScript promises];</li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">JavaScript promises</a>;</li>
 <li>the <a href="https://hyper.rs">hyper library</a> has <a href="https://github.com/hyperium/hyper/issues/1805">migrated</a> to adopt standard Rust futures;</li>
 <li>the newly released 0.3.0 version of the <a href="https://crates.io/crates/futures">futures-rs library</a> includes support
 for async-await;</li>
@@ -134,9 +134,8 @@ beta!&quot;</a> post.)</em></p>
 can &quot;pause&quot;, return control to the runtime, and then pick up from
 where they left off.  Typically those pauses are to wait for I/O, but
 there can be any number of uses.</p>
-<p>You may be familiar with the async-await from other languages, such as
-JavaScript or C#. Rust's version of the feature is similar, but with a
-few key differences.</p>
+<p>You may be familiar with the async-await from JavaScript or C#. Rust's
+version of the feature is similar, but with a few key differences.</p>
 <p>To use async-await, you start by writing <code>async fn</code> instead of <code>fn</code>:</p>
 <pre><code class="language-rust">async fn first_function() -&gt; u32 { .. }
 </code></pre>
@@ -161,12 +160,12 @@ errors (which, after all, are very common in I/O). You can simply
 write <code>future.await?</code> to await the result of a future and propagate
 errors. It also has the advantage of making method chaining painless.</p>
 <h3><a href="#zero-cost-futures" aria-hidden="true" class="anchor" id="zero-cost-futures"></a>Zero-cost futures</h3>
-<p>The other difference between Rust futures and futures in other
-languages is that they are based on a &quot;poll&quot; model, which makes them
-<strong>zero cost</strong>. In other languages, invoking an async function
-immediately creates a future and schedules it for execution: awaiting
-the future isn't necessary for it to execute. But this implies some
-overhead for each future that is created.</p>
+<p>The other difference between Rust futures and futures in JS and C# is
+that they are based on a &quot;poll&quot; model, which makes them <strong>zero
+cost</strong>. In other languages, invoking an async function immediately
+creates a future and schedules it for execution: awaiting the future
+isn't necessary for it to execute. But this implies some overhead for
+each future that is created.</p>
 <p>In contrast, in Rust, calling an async function does not do any
 scheduling in and of itself, which means that we can compose a complex
 nest of futures without incurring a per-future cost. As an end-user,

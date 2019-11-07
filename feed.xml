@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Team.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-07T14:24:48Z</updated>
+    <updated>2019-11-07T17:45:01Z</updated>
 
     
     <entry>
@@ -170,7 +170,7 @@ in November that supports async-await syntax;&lt;/li&gt;
 &lt;li&gt;the &lt;a href=&quot;https://async.rs/&quot;&gt;async-std&lt;/a&gt; runtime &lt;a href=&quot;https://github.com/async-rs/async-std/releases&quot;&gt;has been putting out weekly releases for the past few months&lt;/a&gt;, and plans to make their
 1.0 release shortly after async-await hits stable;&lt;/li&gt;
 &lt;li&gt;using &lt;a href=&quot;https://docs.rs/crate/wasm-bindgen-futures/0.2.16&quot;&gt;wasm-bindgen-futures&lt;/a&gt;, you can even bridge Rust Futures with
-[JavaScript promises];&lt;/li&gt;
+&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises&quot;&gt;JavaScript promises&lt;/a&gt;;&lt;/li&gt;
 &lt;li&gt;the &lt;a href=&quot;https://hyper.rs&quot;&gt;hyper library&lt;/a&gt; has &lt;a href=&quot;https://github.com/hyperium/hyper/issues/1805&quot;&gt;migrated&lt;/a&gt; to adopt standard Rust futures;&lt;/li&gt;
 &lt;li&gt;the newly released 0.3.0 version of the &lt;a href=&quot;https://crates.io/crates/futures&quot;&gt;futures-rs library&lt;/a&gt; includes support
 for async-await;&lt;/li&gt;
@@ -186,9 +186,8 @@ beta!&amp;quot;&lt;/a&gt; post.)&lt;/em&gt;&lt;/p&gt;
 can &amp;quot;pause&amp;quot;, return control to the runtime, and then pick up from
 where they left off.  Typically those pauses are to wait for I/O, but
 there can be any number of uses.&lt;/p&gt;
-&lt;p&gt;You may be familiar with the async-await from other languages, such as
-JavaScript or C#. Rust's version of the feature is similar, but with a
-few key differences.&lt;/p&gt;
+&lt;p&gt;You may be familiar with the async-await from JavaScript or C#. Rust's
+version of the feature is similar, but with a few key differences.&lt;/p&gt;
 &lt;p&gt;To use async-await, you start by writing &lt;code&gt;async fn&lt;/code&gt; instead of &lt;code&gt;fn&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;async fn first_function() -&amp;gt; u32 { .. }
 &lt;/code&gt;&lt;/pre&gt;
@@ -213,12 +212,12 @@ errors (which, after all, are very common in I/O). You can simply
 write &lt;code&gt;future.await?&lt;/code&gt; to await the result of a future and propagate
 errors. It also has the advantage of making method chaining painless.&lt;/p&gt;
 &lt;h3&gt;&lt;a href=&quot;#zero-cost-futures&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;zero-cost-futures&quot;&gt;&lt;/a&gt;Zero-cost futures&lt;/h3&gt;
-&lt;p&gt;The other difference between Rust futures and futures in other
-languages is that they are based on a &amp;quot;poll&amp;quot; model, which makes them
-&lt;strong&gt;zero cost&lt;/strong&gt;. In other languages, invoking an async function
-immediately creates a future and schedules it for execution: awaiting
-the future isn't necessary for it to execute. But this implies some
-overhead for each future that is created.&lt;/p&gt;
+&lt;p&gt;The other difference between Rust futures and futures in JS and C# is
+that they are based on a &amp;quot;poll&amp;quot; model, which makes them &lt;strong&gt;zero
+cost&lt;/strong&gt;. In other languages, invoking an async function immediately
+creates a future and schedules it for execution: awaiting the future
+isn't necessary for it to execute. But this implies some overhead for
+each future that is created.&lt;/p&gt;
 &lt;p&gt;In contrast, in Rust, calling an async function does not do any
 scheduling in and of itself, which means that we can compose a complex
 nest of futures without incurring a per-future cost. As an end-user,
