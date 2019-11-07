@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Team.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-07T14:16:02Z</updated>
+    <updated>2019-11-07T14:24:48Z</updated>
 
     
     <entry>
@@ -172,7 +172,7 @@ in November that supports async-await syntax;&lt;/li&gt;
 &lt;li&gt;using &lt;a href=&quot;https://docs.rs/crate/wasm-bindgen-futures/0.2.16&quot;&gt;wasm-bindgen-futures&lt;/a&gt;, you can even bridge Rust Futures with
 [JavaScript promises];&lt;/li&gt;
 &lt;li&gt;the &lt;a href=&quot;https://hyper.rs&quot;&gt;hyper library&lt;/a&gt; has &lt;a href=&quot;https://github.com/hyperium/hyper/issues/1805&quot;&gt;migrated&lt;/a&gt; to adopt standard Rust futures;&lt;/li&gt;
-&lt;li&gt;the newly released 0.3.0 version of the &lt;a href=&quot;https://crates.io/crates/futures-preview&quot;&gt;futures-rs library&lt;/a&gt; includes support
+&lt;li&gt;the newly released 0.3.0 version of the &lt;a href=&quot;https://crates.io/crates/futures&quot;&gt;futures-rs library&lt;/a&gt; includes support
 for async-await;&lt;/li&gt;
 &lt;li&gt;finally, async-await support is starting to become available in higher-level
 &lt;a href=&quot;https://www.arewewebyet.org/topics/frameworks/&quot;&gt;web frameworks&lt;/a&gt; as well, as well as other interesting applications such
