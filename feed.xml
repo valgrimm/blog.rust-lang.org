@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Team.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-07T14:08:19Z</updated>
+    <updated>2019-11-07T14:16:02Z</updated>
 
     
     <entry>
@@ -21,7 +21,7 @@
         <id>https://blog.rust-lang.org/2019/11/07/Rust-1.39.0.html</id>
         <content type="html" xml:base="https://blog.rust-lang.org/2019/11/07/Rust-1.39.0.html">&lt;p&gt;The Rust team is happy to announce a new version of Rust, 1.39.0. Rust is a programming language that is empowering everyone to build reliable and efficient software.&lt;/p&gt;
 &lt;p&gt;If you have a previous version of Rust installed via rustup, getting Rust 1.39.0 is as easy as:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-console&quot;&gt;$ rustup update stable
+&lt;pre&gt;&lt;code class=&quot;language-console&quot;&gt;rustup update stable
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;If you don't have it already, you can &lt;a href=&quot;https://www.rust-lang.org/install.html&quot;&gt;get &lt;code&gt;rustup&lt;/code&gt;&lt;/a&gt; from the appropriate page on our website, and check out the &lt;a href=&quot;https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1390-2019-11-07&quot;&gt;detailed release notes for 1.39.0&lt;/a&gt; on GitHub.&lt;/p&gt;
 &lt;h2&gt;&lt;a href=&quot;#whats-in-1.39.0-stable&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;whats-in-1.39.0-stable&quot;&gt;&lt;/a&gt;What's in 1.39.0 stable&lt;/h2&gt;
