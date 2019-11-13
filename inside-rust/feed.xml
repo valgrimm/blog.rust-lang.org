@@ -10,8 +10,68 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-11T18:12:49Z</updated>
+    <updated>2019-11-13T13:59:49Z</updated>
 
+    
+    <entry>
+        <title>Governance WG Call For Participation</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/13/goverance-wg-cfp.html" type="text/html" title="Governance WG Call For Participation" />
+        <published>2019-11-13T00:00:00Z</published>
+        <updated>2019-11-13T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/11/13/goverance-wg-cfp.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/13/goverance-wg-cfp.html">&lt;p&gt;Hello everyone, the governance working group has been working a few efforts, but
+we haven't made as much progress as we would have liked over the past few
+months, so we are going to try out a new process and meeting agenda aimed at
+trying to get more work done in the time we know we have.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#new-meeting-structure&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;new-meeting-structure&quot;&gt;&lt;/a&gt;New Meeting Structure&lt;/h2&gt;
+&lt;p&gt;Previously we have been doing most of our work async while using our bi-weekly
+meeting call to triage tasks. The problem we ran into with this is that a lot of
+the members also heavy contributors to the Rust project as a whole, and it can
+be can hard for some people to schedule time write an initial draft.&lt;/p&gt;
+&lt;p&gt;To address this instead of triaging during the meeting and working on tasks in
+async, we're going to hold focused topic based meetings, and use the time between
+meetings, to publish posts like this and to research and prepare for the next
+topic. To help do this we're going to extend our current meeting duration from
+30 minutes to an hour. (The meeting will still be every two weeks.)&lt;/p&gt;
+&lt;p&gt;The current goals are to documenting the de-facto governance structure, provide
+the result as a RFC and then if merged provide a version on
+&lt;a href=&quot;https://forge.rust-lang.org/&quot;&gt;forge.rust-lang.org&lt;/a&gt; so that it has greater visbility. We also want to
+schedule people involved in Rust and other governance structures to come and
+talk about their experiences.&lt;/p&gt;
+&lt;p&gt;For deciding what topics, we're going to rotate who takes the lead for each
+meeting. It's that person's responsibility to decide the topic and to
+prepare a call for participation similar to this post informing people of
+the topic and how they might best prepare if they wish to join.&lt;/p&gt;
+&lt;p&gt;We also hope that having a focused topic will reduce any barrier of expected
+knowledge in order to participate and contribute. With that said let's talk
+about the topic for next meeting.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#reviewing--examining-previous-governance-rfcs&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;reviewing--examining-previous-governance-rfcs&quot;&gt;&lt;/a&gt;Reviewing &amp;amp; Examining Previous Governance RFCs&lt;/h2&gt;
+&lt;p&gt;Our first topic for new meeting is going to be to read &lt;a href=&quot;https://rust-lang.github.io/rfcs/1068-rust-governance.html&quot;&gt;RFC 1068&lt;/a&gt;, the
+original Rust Governance RFC, review how accurate it is to today's structure,
+and see any if there are questions that we have that it doesn't answer. Here
+are some other relevant RFCs for additional context:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rust-lang/rfcs/blob/26197104b7bb9a5a35db243d639aee6e46d35d75/text/1728-north-star.md&quot;&gt;&amp;quot;North Star&amp;quot; RFC&lt;/a&gt; lays out the Rust roadmap process.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://rust-lang.github.io/rfcs/2689-compiler-team-contributors.html&quot;&gt;Compiler contributors RFC&lt;/a&gt; details the process of contributing to the
+compiler and progression towards joining the compiler team.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://rust-lang.github.io/rfcs/1589-rustc-bug-fix-procedure.html&quot;&gt;Compiler bug fix procedure&lt;/a&gt; defines the best practices for making a bug fix
+to the compiler.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Our next meeting is going to be at &lt;strong&gt;22:00 UTC on Tuesday, November 19th&lt;/strong&gt;
+and we'd like to encourage anyone who's interested, regardless of their
+previous experience to read those RFCs and come to the &lt;code&gt;#wg-governance&lt;/code&gt;
+channel on discord to attend the meeting. (Our meetings are done over a video
+call with Zoom, but we use the discord channel to organise ourselves).&lt;/p&gt;
+&lt;p&gt;If some reason you know you won't be able to attend these meetings but would
+still like to participate. Please feel free to post any questions about Rust's
+governance as &lt;a href=&quot;https://github.com/rust-lang/wg-governance/issues?q=is%3Aissue+is%3Aopen+label%3AQuestion&quot;&gt;issues on our GitHub repository&lt;/a&gt;, even if you are
+not available to attend the working group's meetings.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Erin Power</name>
+        </author>
+    </entry>
     
     <entry>
         <title>2019-11-07 Compiler Team Triage Meeting</title>
@@ -464,80 +524,6 @@ congratulations! 🎉&lt;/p&gt;
 
         <author>
             <name>Niko Matsakis</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>docs.rs outage postmortem</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/10/24/docsrs-outage-postmortem.html" type="text/html" title="docs.rs outage postmortem" />
-        <published>2019-10-24T00:00:00Z</published>
-        <updated>2019-10-24T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/10/24/docsrs-outage-postmortem.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/10/24/docsrs-outage-postmortem.html">&lt;p&gt;At 2019-10-21 01:38 UTC the docs.rs website went down because no available disk
-space was left on the server hosting the application. Crate builds were failing
-since 2019-10-20 00:55 UTC due to the same reason.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#root-cause-of-the-outage&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;root-cause-of-the-outage&quot;&gt;&lt;/a&gt;Root cause of the outage&lt;/h2&gt;
-&lt;p&gt;docs.rs needs to store the built documentation on the filesystem before
-uploading it to the database, and it does so in the
-&lt;code&gt;/opt/docs-rs-prefix/documentations&lt;/code&gt; directory. docs.rs never cleared that
-directory though, so over time it started to increase its size until it caused
-this outage. Code to periodically purge temporary directories was present, but
-it was never configured to purge the one which caused the outage.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#resolution&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;resolution&quot;&gt;&lt;/a&gt;Resolution&lt;/h2&gt;
-&lt;p&gt;As the directory doesn’t contain any persistent data we cleared it and the web
-server was restarted. Once we were confident the situation was resolved all the
-crates that failed due to the outage were queued for a rebuild.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#postmortem&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;postmortem&quot;&gt;&lt;/a&gt;Postmortem&lt;/h2&gt;
-&lt;p&gt;The increased disk usage was gradual over weeks, slowly reaching 100% and
-causing the outage. While monitoring systems were in place and recorded graphs
-of the increase, no alert was configured so nobody noticed the problem. We need
-to add alerts when disk usage reaches 90%, so the problem can be investigated
-and dealt with on time.&lt;/p&gt;
-&lt;p&gt;Crates started to fail to build a day earlier, and close to no builds were
-successfully completed since then. We need to setup alerts when most of the
-builds are failing: as we don’t have the necessary metrics at the moment to
-reliably alert we'll have to add extra instrumentation as well.&lt;/p&gt;
-&lt;p&gt;Our response was slower due to issues with our on-call rotation for the
-service. The primary contacts don’t have the level of access required to
-increase the disk space of the instance (the temporary fix that was
-investigated at first but discarded after the discovery nobody awake could do
-it), and the backup contacts don’t have any production access or expertise on
-docs.rs.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#timeline-of-events&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;timeline-of-events&quot;&gt;&lt;/a&gt;Timeline of events&lt;/h2&gt;
-&lt;p&gt;Unless otherwise noted all events happened on 2019-10-21, and all times are in
-UTC.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;2019-10-20 00:55: crate builds started failing due to the low disk space&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;01:38: alerts fired for the docs.rs website being down, &lt;a href=&quot;https://github.com/ashleygwilliams&quot;&gt;ashleygwilliams&lt;/a&gt;
-(backup contact) got paged&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;01:39: &lt;a href=&quot;https://github.com/QuietMisdreavus&quot;&gt;QuietMisdreavus&lt;/a&gt; joins into the operations channel&lt;/li&gt;
-&lt;li&gt;01:39: &lt;a href=&quot;https://github.com/QuietMisdreavus&quot;&gt;QuietMisdreavus&lt;/a&gt; found the reason for the outage (full root partition)&lt;/li&gt;
-&lt;li&gt;01:52: &lt;a href=&quot;https://github.com/ashleygwilliams&quot;&gt;ashleygwilliams&lt;/a&gt; proposed to increase disk space, nobody with
-permissions required to so was awake or available though&lt;/li&gt;
-&lt;li&gt;01:56: &lt;a href=&quot;https://github.com/ashleygwilliams&quot;&gt;ashleygwilliams&lt;/a&gt; contacts &lt;a href=&quot;https://github.com/Mark-Simulacrum&quot;&gt;Mark-Simulacrum&lt;/a&gt;, who has the access
-required to increase disk space&lt;/li&gt;
-&lt;li&gt;01:57: &lt;a href=&quot;https://github.com/QuietMisdreavus&quot;&gt;QuietMisdreavus&lt;/a&gt; found the directory taking up all the disk space&lt;/li&gt;
-&lt;li&gt;02:00: &lt;a href=&quot;https://github.com/QuietMisdreavus&quot;&gt;QuietMisdreavus&lt;/a&gt; removed the directory taking up all the disk space&lt;/li&gt;
-&lt;li&gt;02:03: &lt;a href=&quot;https://github.com/QuietMisdreavus&quot;&gt;QuietMisdreavus&lt;/a&gt; restarted the web server&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;02:06: CDN propagated the changes, docs.rs back online&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;02:06: &lt;a href=&quot;https://github.com/Mark-Simulacrum&quot;&gt;Mark-Simulacrum&lt;/a&gt; joins into the operations channel&lt;/li&gt;
-&lt;li&gt;08:19: &lt;a href=&quot;https://github.com/pietroalbini&quot;&gt;pietroalbini&lt;/a&gt; added builds failed during the outage back into the
-queue&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;19:27: builds of the crates failed during the outage finished&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;&lt;a href=&quot;#action-items&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;action-items&quot;&gt;&lt;/a&gt;Action items&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Update the docs.rs source code to cleanup the offending directory
-automatically.&lt;/li&gt;
-&lt;li&gt;Add alerts when the available disk space on a server is below 10%.&lt;/li&gt;
-&lt;li&gt;Add alerts when most of the builds are failing.&lt;/li&gt;
-&lt;li&gt;Revisit the on-call rotation to make sure everyone on it has the
-permissions to either react to the incidents or escalate.&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-
-        <author>
-            <name>Pietro Albini</name>
         </author>
     </entry>
     
