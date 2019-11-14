@@ -10,8 +10,39 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-13T13:59:49Z</updated>
+    <updated>2019-11-14T14:43:56Z</updated>
 
+    
+    <entry>
+        <title>Evaluating GitHub Actions</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/14/evaluating-github-actions.html" type="text/html" title="Evaluating GitHub Actions" />
+        <published>2019-11-14T00:00:00Z</published>
+        <updated>2019-11-14T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/11/14/evaluating-github-actions.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/14/evaluating-github-actions.html">&lt;p&gt;The Rust Infrastructure team is happy to announce that we’re starting an
+evaluation of &lt;a href=&quot;https://github.com/features/actions&quot;&gt;GitHub Actions&lt;/a&gt; as a
+replacement for Azure Pipelines as the CI provider of the
+&lt;a href=&quot;https://github.com/rust-lang/rust&quot;&gt;rust-lang/rust&lt;/a&gt; repository.&lt;/p&gt;
+&lt;p&gt;We’ve been part of the beta of GitHub Actions since the beginning, following
+its development closely and testing it on a lot of smaller repositories in our
+organization, and we’re really satisfied so far with the product. GitHub
+Actions provides most of the features we love about Azure Pipelines, while
+being integrated with GitHub’s UI, permissions and workflows.&lt;/p&gt;
+&lt;p&gt;GitHub has also offered to sponsor a dedicated pool of builders with increased
+resources. Our extensive but time-consuming CI is one of the major pain points
+for compiler contributors, and the additional resources have the potential to
+drastically improve our developers’ experience. We have achieved 60% faster
+builds in preliminary testing thanks to the increased core count in the
+dedicated builder pool, and there is still large room to parallelize and finish
+builds even faster.&lt;/p&gt;
+&lt;p&gt;Our plan is to start running GitHub Actions in parallel with Azure Pipelines in
+the next few weeks, and we’ll keep the community updated as we learn more.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Pietro Albini</name>
+        </author>
+    </entry>
     
     <entry>
         <title>Governance WG Call For Participation</title>
@@ -499,27 +530,6 @@ meetings take place on Zulip and are open to all. Every 4 weeks, we do
 a planning meeting to pick the next few meetings from the list of open
 proposals. You can find &lt;a href=&quot;https://rust-lang.github.io/compiler-team/about/steering-meeting/&quot;&gt;more details about how the compiler-team
 steering meeting process here&lt;/a&gt;.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Niko Matsakis</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>Please welcome pnkfelix as compiler team co-lead!</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/10/24/pnkfelix-compiler-team-co-lead.html" type="text/html" title="Please welcome pnkfelix as compiler team co-lead!" />
-        <published>2019-10-24T00:00:00Z</published>
-        <updated>2019-10-24T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/10/24/pnkfelix-compiler-team-co-lead.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/10/24/pnkfelix-compiler-team-co-lead.html">&lt;p&gt;I'm happy to announce that &lt;a href=&quot;https://github.com/pnkfelix&quot;&gt;pnkfelix&lt;/a&gt; will be joining me as compiler
-team co-lead. Felix was a &amp;quot;founding member&amp;quot; of the compiler team when
-it first started, and was involved with Rust long before that. For the
-last year or so, he's been taking over an increasingly large share of
-&amp;quot;compiler team leadership&amp;quot;, including running the weekly triage
-meeting and generally tending to the quality of the compiler as a
-whole. So many thanks to &lt;a href=&quot;https://github.com/pnkfelix&quot;&gt;pnkfelix&lt;/a&gt; for all that he does, and
-congratulations! 🎉&lt;/p&gt;
 </content>
 
         <author>
