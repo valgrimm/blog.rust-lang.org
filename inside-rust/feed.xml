@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-14T14:43:56Z</updated>
+    <updated>2019-11-14T18:22:32Z</updated>
 
     
     <entry>
@@ -37,6 +37,14 @@ dedicated builder pool, and there is still large room to parallelize and finish
 builds even faster.&lt;/p&gt;
 &lt;p&gt;Our plan is to start running GitHub Actions in parallel with Azure Pipelines in
 the next few weeks, and we’ll keep the community updated as we learn more.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;[Update]&lt;/strong&gt; Some members of the community asked why we're considering to
+switch away from Azure Pipelines so soon after migrating to it. We want to
+reaffirm that we're happy with Pipelines as a product, but both Microsoft and
+GitHub asked us to try GitHub Actions because it's more closely integrated into
+the GitHub workflow that we already use. After we used it for a while in other
+repositories we were satisfied enough to start evaluating a migration for
+rustc's CI.&lt;/p&gt;
 </content>
 
         <author>
