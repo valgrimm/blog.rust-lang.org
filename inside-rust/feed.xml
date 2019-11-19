@@ -10,8 +10,57 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-18T09:55:50Z</updated>
+    <updated>2019-11-19T18:59:38Z</updated>
 
+    
+    <entry>
+        <title>2019-11-19 Infrastructure Team Meeting</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/19/infra-team-meeting.html" type="text/html" title="2019-11-19 Infrastructure Team Meeting" />
+        <published>2019-11-19T00:00:00Z</published>
+        <updated>2019-11-19T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/11/19/infra-team-meeting.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/19/infra-team-meeting.html">&lt;p&gt;Meeting run by pietroalbini. Minutes written by pietroalbini.&lt;br /&gt;
+Attending: alexcrichton, kennytm, Mark-Simulacrum, pietroalbini, shepmaster&lt;br /&gt;
+&lt;a href=&quot;https://discordapp.com/channels/442252698964721669/443148319431065610/646409370095190016&quot;&gt;Start of the conversation&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#migrating-cratesio-behind-cloudfront&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;migrating-cratesio-behind-cloudfront&quot;&gt;&lt;/a&gt;Migrating crates.io behind CloudFront&lt;/h2&gt;
+&lt;p&gt;While static.crates.io (hosting the source code of all the published crates) is
+behind CloudFront, that’s not true today for the crates.io web application.
+This causes problems because crates.io is hosted on Heroku, which requires
+pointing a CNAME to Heroku’s DNS. Unfortunately crates.io doesn’t use a
+subdomain, which prevents us from using CNAMEs. All our DNS zones are on AWS
+Route53, but AWS only supports CNAMEs on the apex pointing to other AWS
+resources. Because of that, the crates.io DNS was managed on a different
+service until today, causing maintenance issues on our end.&lt;/p&gt;
+&lt;p&gt;The solution we’re working torwards is to put CloudFront in front of crates.io,
+and that will finally allow us to migrate the crates.io domain to AWS.
+pietroalbini is finishing the last infra touches, and we expect to deploy the
+changes in the coming days.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#dns-management-with-terraform&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;dns-management-with-terraform&quot;&gt;&lt;/a&gt;DNS management with Terraform&lt;/h2&gt;
+&lt;p&gt;pietroalbini announced to the rest of the team that he started working on
+migrating the DNS records of our domains to Terraform. He already migrated the
+zones of &lt;a href=&quot;https://github.com/rust-lang/simpleinfra/blob/master/terraform/services/dns/cratesio.com.tf&quot;&gt;cratesio.com&lt;/a&gt; and &lt;a href=&quot;https://github.com/rust-lang/simpleinfra/blob/master/terraform/services/dns/crates.io.tf&quot;&gt;crates.io&lt;/a&gt;, and he plans to migrate the other ones
+over the coming weeks. pietroalbini also wrote &lt;a href=&quot;https://forge.rust-lang.org/infra/docs/dns.html&quot;&gt;documentation&lt;/a&gt; on this setup.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#another-github-actions-ci-configuration-prototype&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;another-github-actions-ci-configuration-prototype&quot;&gt;&lt;/a&gt;Another GitHub Actions CI configuration prototype&lt;/h2&gt;
+&lt;p&gt;pietroalbini continued his investigation into another prototype for our new
+GitHub Actions configuration. To reiterate, GitHub Actions doesn’t support
+templates or includes, so the infrastructure team is looking into a way to
+reduce duplication between our pipelines.&lt;/p&gt;
+&lt;p&gt;Since the two prototypes presented at last week’s meeting weren’t liked by all
+the team, pietroalbini continued experimenting, and the prototype presented
+this week was based around YAML anchors, a standard YAML feature to reuse parts
+of data inside a single file. Unfortunately GitHub Actions explicitly disables
+YAML anchors, so pietroalbini wrote a small tool that pre-generates the
+expanded configuration file and commits it into the repo.&lt;/p&gt;
+&lt;p&gt;The team liked this approach much more, as it doesn’t introduce any new
+configuration syntax while keeping the configuration files in a manageable
+state. pietroalbini is going to polish the prototype and open a PR for it in
+the coming days.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Pietro Albini</name>
+        </author>
+    </entry>
     
     <entry>
         <title>2019-11-12 Infrastructure Team Meeting</title>
@@ -480,80 +529,6 @@ will do an initial investigation.&lt;/p&gt;
 
         <author>
             <name>Pietro Albini</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>The Rustc Learning Working Group - An Introduction</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/10/28/rustc-learning-working-group-introduction.html" type="text/html" title="The Rustc Learning Working Group - An Introduction" />
-        <published>2019-10-28T00:00:00Z</published>
-        <updated>2019-10-28T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/10/28/rustc-learning-working-group-introduction.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/10/28/rustc-learning-working-group-introduction.html">&lt;p&gt;The &lt;a href=&quot;https://github.com/rust-lang/compiler-team/tree/master/content/working-groups/learning&quot;&gt;Learning Working Group&lt;/a&gt;, formed in April 2019, is focused on making the
-compiler easier to learn by ensuring that &lt;a href=&quot;https://rust-lang.github.io/rustc-guide/&quot;&gt;rustc-guide&lt;/a&gt; and API docs are
-&amp;quot;complete&amp;quot;. It is one of the many efforts by the Rust Compiler team to
-decrease the barrier of contributing to the compiler. As noted on the WG’s
-homepage —&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;This working group aims to accomplish the following:&lt;/em&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;Ensure that major components of rustc are covered in rustc-guide&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Ensure that API doc coverage is at least 90%&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The Learning Group is making entry to contribute easier by improving the
-compiler documentation for the new and potential contributors. We all know
-this bias — the more time we’ve spent in a system, the less likely we are to
-see the issues that the newcomers might face. Given that, this group
-organically became an attractive place for beginners, who would benefit
-from documenting the compiler internals, while learning those parts of it
-at the same time. This benefits the entire compiler team by giving the
-documentation a perspective from the new contributors.&lt;/p&gt;
-&lt;p&gt;The Learning group, in general, is starting to document the
-“Compiler lecture series”, which are a list of Youtube video lectures
-given earlier by the more knowledgeable members of the compiler team.
-There is also the task of improving the documentation structure of
-&lt;a href=&quot;https://rust-lang.github.io/rustc-guide/&quot;&gt;rustc-guide&lt;/a&gt;. At first, each member used to pick a video lecture by
-themselves and contribute via a Github pull request to the
-&lt;a href=&quot;https://github.com/rust-lang/rustc-guide&quot;&gt;rustc-guide Github repository&lt;/a&gt;. This proved to be a bit difficult
-for the following reasons —&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Not all members would get to watch and work on the lectures of
-their choice.&lt;/li&gt;
-&lt;li&gt;The knowledge would still be fragmented depending on who watched
-which lecture.&lt;/li&gt;
-&lt;li&gt;Some lectures are more interesting than others and this means that
-some contributors would miss out on the interesting ones.&lt;/li&gt;
-&lt;li&gt;Certain lectures are more difficult and require input from multiple
-people.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Hence, at the moment, the group decided to work on one video at a time.
-This has proven to be beneficial for the entire group, especially with
-the lecture &lt;a href=&quot;https://www.youtube.com/watch?v=c01TsOsr3-c&quot;&gt;Representing types in rustc&lt;/a&gt;. At the time of this writing,
-it is still a work-in-progress but the input from everyone allows people
-to work together while benefiting from the questions that everyone has
-about the lecture.&lt;/p&gt;
-&lt;p&gt;The group is still learning about the best possible ways to organize and
-manage and some compiler team veterans are always there to help out!
-We are always in need of help from both existing compiler contributors
-and new folks who want to contribute and learn.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#call-for-participation&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;call-for-participation&quot;&gt;&lt;/a&gt;Call for participation&lt;/h2&gt;
-&lt;p&gt;There is no bar to entry in the group. To join the group, you can
-drop a message in &lt;a href=&quot;https://rust-lang.zulipchat.com/#narrow/stream/196385-t-compiler.2Fwg-learning&quot;&gt;&lt;code&gt;#t-compiler/wg-learning&lt;/code&gt; on Zulip&lt;/a&gt; introducing
-yourself. We would love to hear from you and hope we all together
-can make the documentation better.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#important--resources&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;important--resources&quot;&gt;&lt;/a&gt;Important  resources&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/rust-lang/compiler-team/tree/master/content/working-groups/learning&quot;&gt;Learning Working Group&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://rust-lang.github.io/rustc-guide/&quot;&gt;Rustc Guide Book&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc-guide&quot;&gt;Rustc Guide Repository&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc-guide/projects/2&quot;&gt;Github Project (Kanban)&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/rust-lang/compiler-team/tree/master/content/working-groups/learning/minutes&quot;&gt;Learning WG Meeting Minutes&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/channel/UCaYhcUwRBNscFNUKTjgPFiA/playlists&quot;&gt;Rust Youtube Videos&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://rust-lang.zulipchat.com/#narrow/stream/196385-t-compiler.2Fwg-learning&quot;&gt;Zulip Stream: &lt;code&gt;#t-compiler/wg-learning&lt;/code&gt; on Zulip&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-
-        <author>
-            <name>Amanjeev Sethi</name>
         </author>
     </entry>
     
