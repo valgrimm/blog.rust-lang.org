@@ -10,8 +10,48 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-19T18:59:38Z</updated>
+    <updated>2019-11-22T16:57:08Z</updated>
 
+    
+    <entry>
+        <title>Upcoming compiler-team design meetings</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/22/upcoming-compiler-team-design-meetings.html" type="text/html" title="Upcoming compiler-team design meetings" />
+        <published>2019-11-22T00:00:00Z</published>
+        <updated>2019-11-22T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/11/22/upcoming-compiler-team-design-meetings.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/22/upcoming-compiler-team-design-meetings.html">&lt;p&gt;In our &lt;a href=&quot;https://zulip-archive.rust-lang.org/131828tcompiler/03407planningmeeting20191122.html&quot;&gt;planning meeting today&lt;/a&gt;, the &lt;a href=&quot;https://www.rust-lang.org/governance/teams/compiler&quot;&gt;compiler team&lt;/a&gt; has scheduled our
+next batch of upcoming design meetings. You can find the exact times
+on the compiler team's &lt;a href=&quot;https://rust-lang.github.io/compiler-team/#meeting-calendar&quot;&gt;meeting calendar&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;On Nov 29 (&lt;a href=&quot;https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=MjM3aGsxdXY0dHBybXBxZ3ZxOGp1ZjdicjEgNnU1cnJ0Y2U2bHJ0djA3cGZpM2RhbWdqdXNAZw&amp;tmsrc=6u5rrtce6lrtv07pfi3damgjus%40group.calendar.google.com&quot;&gt;calendar event&lt;/a&gt;), we will discuss
+&lt;a href=&quot;https://github.com/rust-lang/compiler-team/issues/213&quot;&gt;rust-lang/compiler-team#213&lt;/a&gt;, a proposal to extend rustc's data
+structures to enable outside crates to experiment with building a
+Rust REPL.&lt;/li&gt;
+&lt;li&gt;On Dec 6 (&lt;a href=&quot;https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=MTByaTZsZG1pZGI1Y2RqdGZ1cHV2djNncTEgNnU1cnJ0Y2U2bHJ0djA3cGZpM2RhbWdqdXNAZw&amp;tmsrc=6u5rrtce6lrtv07pfi3damgjus%40group.calendar.google.com&quot;&gt;calendar event&lt;/a&gt;), we will discuss
+&lt;a href=&quot;https://github.com/rust-lang/compiler-team/issues/175&quot;&gt;rust-lang/compiler-team#175&lt;/a&gt;, which is a plan to modify the
+&lt;code&gt;rustc_interface&lt;/code&gt; trait to enable end-to-end query support in the
+compiler.&lt;/li&gt;
+&lt;li&gt;On Dec 13 (&lt;a href=&quot;https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=MGxrb2p2cG9lNGFnYTIybWVtcGRoZzdjdmogNnU1cnJ0Y2U2bHJ0djA3cGZpM2RhbWdqdXNAZw&amp;tmsrc=6u5rrtce6lrtv07pfi3damgjus%40group.calendar.google.com&quot;&gt;calendar event&lt;/a&gt;), we will discuss
+&lt;a href=&quot;https://github.com/rust-lang/compiler-team/issues/222&quot;&gt;rust-lang/compiler-team#222&lt;/a&gt;, which is a roadmap and strategy for
+eventually merging rustc, rust-analyzer, and the RLS into one
+coherent set of projects.&lt;/li&gt;
+&lt;li&gt;On Dec 20 (&lt;a href=&quot;https://www.google.com/url?q=https://github.com/rust-lang/compiler-team/issues/209&amp;sa=D&amp;ust=1574870064787000&amp;usg=AOvVaw1ep0jCGX9A8WsdRJwTLeTU&quot;&gt;calendar event&lt;/a&gt;), we will discuss
+&lt;a href=&quot;https://github.com/rust-lang/compiler-team/issues/209&quot;&gt;rust-lang/compiler-team#209&lt;/a&gt;, which is a proposal to create a
+&amp;quot;major changes process&amp;quot; for the compiler, to augment these design
+meetings.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;&lt;a href=&quot;#did-you-know&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;did-you-know&quot;&gt;&lt;/a&gt;Did you know?&lt;/h3&gt;
+&lt;p&gt;Most weeks, the compiler team has some sort of design meeting. These
+meetings take place on Zulip and are open to all. Every 4 weeks, we do
+a planning meeting to pick the next few meetings from the list of open
+proposals. You can find &lt;a href=&quot;https://rust-lang.github.io/compiler-team/about/steering-meeting/&quot;&gt;more details about how the compiler-team
+steering meeting process here&lt;/a&gt;.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Niko Matsakis</name>
+        </author>
+    </entry>
     
     <entry>
         <title>2019-11-19 Infrastructure Team Meeting</title>
@@ -467,68 +507,6 @@ There are regular triage meetings every Monday on the compiler calendar.&lt;/p&g
 
         <author>
             <name>Wesley Wiser</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>2019-10-29 Infrastructure Team Meeting</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/10/29/infra-team-meeting.html" type="text/html" title="2019-10-29 Infrastructure Team Meeting" />
-        <published>2019-10-29T00:00:00Z</published>
-        <updated>2019-10-29T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/10/29/infra-team-meeting.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/10/29/infra-team-meeting.html">&lt;p&gt;Meeting run by Mark-Simulacrum. Minutes written by pietroalbini.&lt;br /&gt;
-Attending: alexcrichton, kennytm, Mark-Simulacrum, pietroalbini, shepmaster&lt;br /&gt;
-&lt;a href=&quot;https://discordapp.com/channels/442252698964721669/443148319431065610/638784152014946321&quot;&gt;Start of the conversation&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#news-from-the-team&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;news-from-the-team&quot;&gt;&lt;/a&gt;News from the team&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;A big PR moving most of the CI build environment preparation to standalone
-scripts finally landed! This will allow multiple other CI improvements down
-the line!&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;A crates.io staging environment behind CloudFront has been configured on
-&lt;a href=&quot;https://staging.cratesio.com&quot;&gt;staging.cratesio.com&lt;/a&gt;, testing the
-configuration before deploying it on the main domain. Please note the staging
-server is on a temporary domain and will be moved in the near future.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;&lt;a href=&quot;#rolling-back-the-msys2-hack-p-high-issue)&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;rolling-back-the-msys2-hack-p-high-issue)&quot;&gt;&lt;/a&gt;Rolling back the msys2 hack (P-high issue)&lt;/h2&gt;
-&lt;p&gt;Last week there was an issue in our CI caused by a broken &lt;code&gt;ca-certificates&lt;/code&gt;
-msys2 package, that caused all the windows builders to fail. To patch the
-problem an older version of that package was vendored and CI was configured to
-download it instead of the broken one. Now that upstream fixed the issue,
-pietroalbini will prepare PRs targeting both master and beta rolling back the
-temporary patch.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#what-to-do-with-mirroring-msys2mingw?&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;what-to-do-with-mirroring-msys2mingw?&quot;&gt;&lt;/a&gt;What to do with mirroring msys2/mingw?&lt;/h2&gt;
-&lt;p&gt;The CI issue mentioned in the previous topic started thoughts about vendoring
-msys2 and MinGW as a whole, to prevent such issues from happening in the
-future. msys2 is a weird program to package as it’s more of a Linux-like
-distribution on Windows, with its own package manager based on tooling borrowed
-from Arch Linux.&lt;/p&gt;
-&lt;p&gt;Creating the initial mirrors is not trivial but doable, but the concern is how
-to keep them updated, because for example an outdated OpenSSL is really bad.
-mati865 suggested that other projects often tar the whole msys2 installation
-directory and periodically update that, and we’ll explore that. More discussion
-on the approach will likely happen on the PR implementing the changes.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#restricted-aws-access-for-docsrs-operators&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;restricted-aws-access-for-docsrs-operators&quot;&gt;&lt;/a&gt;Restricted AWS access for docs.rs operators&lt;/h2&gt;
-&lt;p&gt;One of the issues exposed in the &lt;a href=&quot;https://blog.rust-lang.org/inside-rust/2019/10/24/docsrs-outage-postmortem.html&quot;&gt;docs.rs outage postmortem&lt;/a&gt; was that
-the people in the docs.rs on-call rotation did not have access to the AWS
-resources part of docs.rs. pietroalbini proposed to give them limited access,
-namely to stop/start the EC2 instance and to inspect/change the underlying S3
-storage bucket. Mark-Simulacrum thought the access was not needed in practice,
-and we agreed to revisit the topic if issues arise again.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#new-server-for-perf&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;new-server-for-perf&quot;&gt;&lt;/a&gt;New server for perf&lt;/h2&gt;
-&lt;p&gt;To ensure consistent results the collector for &lt;a href=&quot;https://perf.rust-lang.org&quot;&gt;perf.rust-lang.org&lt;/a&gt; needs to be
-on bare metal hardware, and until now it was a server lying under
-alexcrichton’s desk. The server will have to be moved by December though, and
-alexcrichton asked the team on feedback on what to do. There was consensus that
-the best solution is to look for a rented bare metal server, and pietroalbini
-will do an initial investigation.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Pietro Albini</name>
         </author>
     </entry>
     
