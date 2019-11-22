@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-22T17:19:50Z</updated>
+    <updated>2019-11-22T18:38:07Z</updated>
 
     
     <entry>
@@ -46,6 +46,63 @@ meetings take place on Zulip and are open to all. Every 4 weeks, we do
 a planning meeting to pick the next few meetings from the list of open
 proposals. You can find &lt;a href=&quot;https://rust-lang.github.io/compiler-team/about/steering-meeting/&quot;&gt;more details about how the compiler-team
 steering meeting process here&lt;/a&gt;.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Niko Matsakis</name>
+        </author>
+    </entry>
+    
+    <entry>
+        <title>2019-11-14 and 2019-11-21 Lang Team Triage Meetings</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/22/Lang-team-meeting.html" type="text/html" title="2019-11-14 and 2019-11-21 Lang Team Triage Meetings" />
+        <published>2019-11-22T00:00:00Z</published>
+        <updated>2019-11-22T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/11/22/Lang-team-meeting.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/22/Lang-team-meeting.html">&lt;p&gt;Since I apparently forgot to post a blog post last week, this blog
+post covers two lang-team triage meetings: [2019-11-14] and
+[2019-11-21]. Recordings from &lt;a href=&quot;https://youtu.be/0exyVhBmDW0&quot;&gt;both&lt;/a&gt; &lt;a href=&quot;https://youtu.be/X2z3CoV0OUM&quot;&gt;meetings&lt;/a&gt; are also available.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#updates-on-shepherded-items&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;updates-on-shepherded-items&quot;&gt;&lt;/a&gt;Updates on shepherded items&lt;/h2&gt;
+&lt;p&gt;Here is a list of the &lt;a href=&quot;http://smallcultfollowing.com/babysteps/blog/2019/09/11/aic-shepherds-3-0/&quot;&gt;&amp;quot;shepherded items&amp;quot;&lt;/a&gt; that the lang team is
+tracking, along with weekly updates on the latest developments.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rust-lang/const-eval&quot;&gt;const-eval&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;there is progress towards extending the set of expressions
+permitted in constants to include &lt;code&gt;&amp;amp;mut&lt;/code&gt; borrows, if/match, and
+loops.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rust-lang/project-ffi-unwind&quot;&gt;project-ffi-unwind&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;current status: currently evaluating whether &amp;quot;C&amp;quot; functions should
+permit unwinding by default&lt;/li&gt;
+&lt;li&gt;trying to get measurements of the impact on code size&lt;/li&gt;
+&lt;li&gt;prototyped the plan in a rustc branch, but needs a few updates and to be executed
+on a representative code base (likely Fuschia)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rust-lang/rust/issues/57893&quot;&gt;Coherence can be bypassed by an indirect impl for a trait object&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;did a &lt;a href=&quot;https://github.com/rust-lang/rust/pull/66037#issuecomment-549575983&quot;&gt;crater run of the proposal&lt;/a&gt; but have only partially analyzed the impact&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;grammar working group — qmx
+&lt;ul&gt;
+&lt;li&gt;no updates this week&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;!&lt;/code&gt; type and fallback — centril
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2018&amp;gist=a16420f41bbd2496ed07c75cf048189e&quot;&gt;&lt;code&gt;!&lt;/code&gt; is stable on nightly!&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;&lt;a href=&quot;#about-the-lang-team-meetings&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;about-the-lang-team-meetings&quot;&gt;&lt;/a&gt;About the lang-team meetings&lt;/h2&gt;
+&lt;p&gt;The lang-team triage meetings are held weekly on Zoom (see our
+&lt;a href=&quot;https://github.com/rust-lang/lang-team/#meeting-calendar&quot;&gt;meeting calendar&lt;/a&gt;). Anyone is welcome to come and observe. We make a
+&amp;quot;best effort&amp;quot; to record the meetings though technical issues sometimes
+intervene.&lt;/p&gt;
 </content>
 
         <author>
@@ -551,50 +608,6 @@ we’ll keep doing that for a while. aidanhs is going to run the next meeting.&l
 
         <author>
             <name>Pietro Albini</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>Clippy is removing its plugin interface</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/04/Clippy-removes-plugin-interface.html" type="text/html" title="Clippy is removing its plugin interface" />
-        <published>2019-11-04T00:00:00Z</published>
-        <updated>2019-11-04T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/11/04/Clippy-removes-plugin-interface.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/04/Clippy-removes-plugin-interface.html">&lt;p&gt;Today, we're announcing that Clippy will completely remove its plugin interface.
-Using the plugin interface has been deprecated for about one and a half year now
-(&lt;a href=&quot;https://github.com/rust-lang/rust-clippy/pull/2712&quot;&gt;rust-lang/rust-clippy#2712&lt;/a&gt;). Since then, an unsilenceable warning has been
-emitted. Now that compiler plugins are officially deprecated
-(&lt;a href=&quot;https://github.com/rust-lang/rust/pull/64675&quot;&gt;rust-lang/rust#64675&lt;/a&gt;), Clippy will remove its support for the plugin
-interface completely (&lt;a href=&quot;https://github.com/rust-lang/rust-clippy/pull/4714&quot;&gt;rust-lang/rust-clippy#4714&lt;/a&gt;). This change will hit stable
-with version 1.41.0.&lt;/p&gt;
-&lt;h3&gt;&lt;a href=&quot;#does-this-post-affect-me&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;does-this-post-affect-me&quot;&gt;&lt;/a&gt;Does this post affect me?&lt;/h3&gt;
-&lt;p&gt;Most likely, no. This post only affects you, if you're still using Clippy
-through its plugin interface. If you do so, you get the warning&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;warning: the clippy plugin is being deprecated, please use cargo clippy or rls with the clippy feature
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;when compiling your crate. If you don't see this warning, nothing will change
-for you.&lt;/p&gt;
-&lt;h3&gt;&lt;a href=&quot;#how-do-i-migrate-from-the-plugin-interface&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;how-do-i-migrate-from-the-plugin-interface&quot;&gt;&lt;/a&gt;How do I migrate from the plugin interface?&lt;/h3&gt;
-&lt;p&gt;If you are still using the Clippy plugin interface, here are some steps you can
-take to migrate to &lt;code&gt;cargo clippy&lt;/code&gt;.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;Cargo.toml&lt;/code&gt;: Remove every occurrence of the &lt;code&gt;clippy&lt;/code&gt; dependency and the
-&lt;code&gt;clippy&lt;/code&gt; feature.&lt;/li&gt;
-&lt;li&gt;Completely remove every occurrence of &lt;code&gt;feature(plugin)&lt;/code&gt; and &lt;code&gt;plugin(clippy)&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Replace every occurrence of &lt;code&gt;feature = &amp;quot;clippy&amp;quot;&lt;/code&gt; with &lt;code&gt;feature = &amp;quot;cargo-clippy&amp;quot;&lt;/code&gt;. The &lt;code&gt;cargo-clippy&lt;/code&gt; feature is automatically enabled when
-running &lt;code&gt;cargo clippy&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;CI: You now have to install Clippy via rustup, with &lt;code&gt;rustup component add clippy&lt;/code&gt;. Once installed, you can run &lt;code&gt;cargo clippy&lt;/code&gt; (for more usage
-instructions, see the &lt;a href=&quot;https://github.com/rust-lang/rust-clippy#usage&quot;&gt;Clippy &lt;code&gt;README&lt;/code&gt;&lt;/a&gt;). Note that Clippy is not included in
-every nightly, but you can check its availability on the &lt;a href=&quot;https://rust-lang.github.io/rustup-components-history/index.html&quot;&gt;rustup components
-history&lt;/a&gt; page.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;&lt;a href=&quot;#where-should-i-go-if-i-have-more-questions&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;where-should-i-go-if-i-have-more-questions&quot;&gt;&lt;/a&gt;Where should I go if I have more questions?&lt;/h3&gt;
-&lt;p&gt;If you need help with migrating from the plugin interface, you can contact us
-via &lt;a href=&quot;https://discord.gg/vNNtpyD&quot;&gt;Discord&lt;/a&gt; or open an issue on &lt;a href=&quot;https://github.com/rust-lang/rust-clippy/issues/new&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Philipp Krones</name>
         </author>
     </entry>
     
