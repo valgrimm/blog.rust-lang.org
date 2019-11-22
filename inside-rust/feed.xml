@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-22T16:59:08Z</updated>
+    <updated>2019-11-22T17:19:50Z</updated>
 
     
     <entry>
@@ -33,9 +33,9 @@ Rust REPL.&lt;/li&gt;
 compiler.&lt;/li&gt;
 &lt;li&gt;On Dec 13 (&lt;a href=&quot;https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=MGxrb2p2cG9lNGFnYTIybWVtcGRoZzdjdmogNnU1cnJ0Y2U2bHJ0djA3cGZpM2RhbWdqdXNAZw&amp;tmsrc=6u5rrtce6lrtv07pfi3damgjus%40group.calendar.google.com&quot;&gt;calendar event&lt;/a&gt;), we will discuss
 &lt;a href=&quot;https://github.com/rust-lang/compiler-team/issues/222&quot;&gt;rust-lang/compiler-team#222&lt;/a&gt;, which is a roadmap and strategy for
-eventually merging rustc, rust-analyzer, and the RLS into one
+eventually merging rustc, &lt;a href=&quot;https://github.com/rust-analyzer/rust-analyzer/&quot;&gt;rust-analyzer&lt;/a&gt;, and the RLS into one
 coherent set of projects.&lt;/li&gt;
-&lt;li&gt;On Dec 20 (&lt;a href=&quot;https://www.google.com/url?q=https://github.com/rust-lang/compiler-team/issues/209&amp;sa=D&amp;ust=1574870064787000&amp;usg=AOvVaw1ep0jCGX9A8WsdRJwTLeTU&quot;&gt;calendar event&lt;/a&gt;), we will discuss
+&lt;li&gt;On Dec 20 (&lt;a href=&quot;https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=MW12ZWI4NW9zZ2s2dHRkbW5wbjdjMG43Zm8gNnU1cnJ0Y2U2bHJ0djA3cGZpM2RhbWdqdXNAZw&amp;tmsrc=6u5rrtce6lrtv07pfi3damgjus%40group.calendar.google.com&quot;&gt;calendar event&lt;/a&gt;), we will discuss
 &lt;a href=&quot;https://github.com/rust-lang/compiler-team/issues/209&quot;&gt;rust-lang/compiler-team#209&lt;/a&gt;, which is a proposal to create a
 &amp;quot;major changes process&amp;quot; for the compiler, to augment these design
 meetings.&lt;/li&gt;
