@@ -189,7 +189,7 @@ graph. At the moment, the analysis is very conservative, especially when values 
 moved in and out of compound data types. For example, the following will not
 compile, even when the feature gate is enabled.</p>
 <pre><code class="language-rust">const fn imprecise() -&gt; Vec&lt;i32&gt; {
-    let tuple: (Vec&lt;i32&gt;) = (Vec::new(),);
+    let tuple: (Vec&lt;i32&gt;,) = (Vec::new(),);
     tuple.0
 }
 </code></pre>
