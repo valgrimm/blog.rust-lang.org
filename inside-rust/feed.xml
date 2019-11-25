@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-25T08:15:14Z</updated>
+    <updated>2019-11-25T14:33:47Z</updated>
 
     
     <entry>
@@ -174,7 +174,7 @@ Each week, we have general announcements from the team followed by check-ins fro
 &lt;p&gt;Request for assistance: &amp;quot;Rustc panics (NoSolution): could not prove Binder(projection soup)&amp;quot; &lt;a href=&quot;https://github.com/rust-lang/rust/issues/65581&quot;&gt;#65581&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Request for assistance: &amp;quot;Rust 1.38 regressions weren't fully triaged&amp;quot; &lt;a href=&quot;https://github.com/rust-lang/rust/issues/655577&quot;&gt;#65577&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Request for assistance: &amp;quot;Rust 1.38 regressions weren't fully triaged&amp;quot; &lt;a href=&quot;https://github.com/rust-lang/rust/issues/65577&quot;&gt;#65577&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Request for assistance: &amp;quot;Miscompilation with target-cpu=znver1 (AMD Ryzen 1000/2000 series) on Windows + LLVM 9.&amp;quot; &lt;a href=&quot;https://github.com/rust-lang/rust/issues/63959&quot;&gt;#63959&lt;/a&gt;&lt;/p&gt;
