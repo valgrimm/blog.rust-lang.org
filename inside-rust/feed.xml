@@ -10,8 +10,141 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-25T14:33:47Z</updated>
+    <updated>2019-11-25T18:01:56Z</updated>
 
+    
+    <entry>
+        <title>`if` and `match` in constants on nightly rust</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/25/const-if-match.html" type="text/html" title="`if` and `match` in constants on nightly rust" />
+        <published>2019-11-25T00:00:00Z</published>
+        <updated>2019-11-25T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/11/25/const-if-match.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/25/const-if-match.html">&lt;p&gt;&lt;strong&gt;TLDR; &lt;code&gt;if&lt;/code&gt; and &lt;code&gt;match&lt;/code&gt; are now usable in constants on the latest nightly.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As a result, you can now write code like the following and have it execute at
+compile-time:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;static PLATFORM: &amp;amp;str = if cfg!(unix) {
+    &amp;quot;unix&amp;quot;
+} else if cfg!(windows) {
+    &amp;quot;windows&amp;quot;
+} else {
+    &amp;quot;other&amp;quot;
+};
+
+const _: () = assert!(std::mem::size_of::&amp;lt;usize&amp;gt;() == 8, &amp;quot;Only 64-bit platforms are supported&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;if&lt;/code&gt; and &lt;code&gt;match&lt;/code&gt; can also be used in the body of a &lt;code&gt;const fn&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const fn gcd(a: u32, b: u32) -&amp;gt; u32 {
+    match (a, b) {
+        (x, 0) | (0, x) =&amp;gt; x,
+
+        (x, y) if x % 2 == 0 &amp;amp;&amp;amp; y % 2 == 0 =&amp;gt; 2*gcd(x/2, y/2),
+        (x, y) | (y, x) if x % 2 == 0 =&amp;gt; gcd(x/2, y),
+
+        (x, y) if x &amp;lt; y =&amp;gt; gcd((y-x)/2, x),
+        (x, y) =&amp;gt; gcd((x-y)/2, y),
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;&lt;a href=&quot;#what-exactly-is-going-on-here&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;what-exactly-is-going-on-here&quot;&gt;&lt;/a&gt;What exactly is going on here?&lt;/h2&gt;
+&lt;p&gt;The following expressions,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;match&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;if&lt;/code&gt; and &lt;code&gt;if let&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; and &lt;code&gt;||&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;can now appear in any of the following contexts,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;const fn&lt;/code&gt; bodies&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;const&lt;/code&gt; and associated &lt;code&gt;const&lt;/code&gt; initializers&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;static&lt;/code&gt; and &lt;code&gt;static mut&lt;/code&gt; initializers&lt;/li&gt;
+&lt;li&gt;array initializers&lt;/li&gt;
+&lt;li&gt;const generics (EXPERIMENTAL)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;if &lt;code&gt;#![feature(const_if_match)]&lt;/code&gt; is enabled for your crate.&lt;/p&gt;
+&lt;p&gt;You may have noticed that the short-circuiting logic operators, &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; and
+&lt;code&gt;||&lt;/code&gt;, were already legal in a &lt;code&gt;const&lt;/code&gt; or &lt;code&gt;static&lt;/code&gt;. This was accomplished by
+translating them to their non-short-circuiting equivalents, &lt;code&gt;&amp;amp;&lt;/code&gt; and &lt;code&gt;|&lt;/code&gt;
+respectively. Enabling the feature gate will turn off this hack and make &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;
+and &lt;code&gt;||&lt;/code&gt; behave as you would expect.&lt;/p&gt;
+&lt;p&gt;As a side-effect of these changes, the &lt;code&gt;assert&lt;/code&gt; and &lt;code&gt;debug_assert&lt;/code&gt; macros
+become usable in a const context if &lt;code&gt;#![feature(const_panic)]&lt;/code&gt; is also
+enabled. However, the other assert macros (e.g., &lt;code&gt;assert_eq&lt;/code&gt;,
+&lt;code&gt;debug_assert_ne&lt;/code&gt;) remain forbidden, since they need to call &lt;code&gt;Debug::fmt&lt;/code&gt; on
+their arguments.&lt;/p&gt;
+&lt;p&gt;The looping constructs, &lt;code&gt;while&lt;/code&gt;, &lt;code&gt;for&lt;/code&gt;, and &lt;code&gt;loop&lt;/code&gt; are also forbidden and will
+be &lt;a href=&quot;https://github.com/rust-lang/rust/issues/52000&quot;&gt;feature-gated separately&lt;/a&gt;. As you have seen above, loops can be
+emulated with recursion as a temporary measure. However, the non-recursive
+version will usually be more efficient since rust does not (to my knowledge)
+do tail call optimization.&lt;/p&gt;
+&lt;p&gt;Finally, the &lt;code&gt;?&lt;/code&gt; operator remains forbidden in a const context, since its
+desugaring contains a call to &lt;code&gt;From::from&lt;/code&gt;. The design for &lt;code&gt;const&lt;/code&gt; trait
+methods is still being discussed, and both &lt;code&gt;?&lt;/code&gt; and &lt;code&gt;for&lt;/code&gt;, which desugars to a
+call to &lt;code&gt;IntoIterator::into_iter&lt;/code&gt;, will not be usable until a final decision is
+reached.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#whats-next?&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;whats-next?&quot;&gt;&lt;/a&gt;What's next?&lt;/h2&gt;
+&lt;p&gt;This change will allow a great number of standard library functions to be made
+&lt;code&gt;const&lt;/code&gt;. You can help with this process! To get started, here's a &lt;a href=&quot;https://github.com/rust-lang/rust/issues/53718&quot;&gt;list of
+numeric functions&lt;/a&gt; that can be constified with little effort.
+Conversion to a &lt;code&gt;const fn&lt;/code&gt; requires two steps. First, &lt;code&gt;const&lt;/code&gt; is added to a
+function definition along with a &lt;code&gt;#[rustc_const_unstable]&lt;/code&gt; attribute. This
+allows nightly users to call it in a const context. Then, after a period of
+experimentation, the attribute is removed and the constness of that function is
+stabilized. See &lt;a href=&quot;https://github.com/rust-lang/rust/issues/61635&quot;&gt;#61635&lt;/a&gt; for an example of the first step and &lt;a href=&quot;https://github.com/rust-lang/rust/pull/64028&quot;&gt;#64028&lt;/a&gt; for an
+example of the second.&lt;/p&gt;
+&lt;p&gt;Personally, I've looked forward to this feature for a long time, and I can't
+wait to start playing with it. If you feel the same, I would greatly
+appreciate if you tested the limits of this feature! Try to sneak &lt;code&gt;Cell&lt;/code&gt;s and
+types with &lt;code&gt;Drop&lt;/code&gt; impls into places they shouldn't be allowed, blow up the
+stack with poorly implemented recursive functions (see &lt;code&gt;gcd&lt;/code&gt; above), and let
+us know if something goes horribly wrong.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#what-took-you-so-long&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;what-took-you-so-long&quot;&gt;&lt;/a&gt;What took you so long?&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://rust-lang.github.io/rustc-guide/miri.html&quot;&gt;The Miri engine&lt;/a&gt;, which rust uses under the hood for compile-time
+function evaluation, has been capable of this for a while now. However, rust
+needs to statically guarantee certain properties about variables in a &lt;code&gt;const&lt;/code&gt;,
+such as whether they allow for interior mutability or whether they have a
+&lt;code&gt;Drop&lt;/code&gt; implementation that needs to be called. For example, we must reject the
+following code since it would result in a &lt;code&gt;const&lt;/code&gt; being mutable at runtime!&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const CELL: &amp;amp;std::cell::Cell&amp;lt;i32&amp;gt; = &amp;amp;std::cell::Cell::new(42); // Not allowed...
+
+fn main() {
+    CELL.set(0);
+    println!(&amp;quot;{}&amp;quot;, CELL.get()); // otherwise this could print `0`!!!
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, it is sometimes okay for a &lt;code&gt;const&lt;/code&gt; to contain a reference to a &lt;em&gt;type&lt;/em&gt;
+that may have interior mutability, as long as we can prove that the actual
+&lt;em&gt;value&lt;/em&gt; of that type does not. This is particularly useful for &lt;code&gt;enum&lt;/code&gt;s with a
+&amp;quot;unit variant&amp;quot; (e.g., &lt;code&gt;Option::None&lt;/code&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const NO_CELL: Option&amp;lt;&amp;amp;std::cell::Cell&amp;lt;i32&amp;gt;&amp;gt; = None; // OK
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A more detailed (but non-normative) treatment of the rules &lt;a href=&quot;https://github.com/rust-lang/const-eval/blob/master/static.md#drop&quot;&gt;for &lt;code&gt;Drop&lt;/code&gt;&lt;/a&gt;
+and &lt;a href=&quot;https://github.com/rust-lang/const-eval/blob/master/const.md#2-interior-mutability&quot;&gt;for interior mutability&lt;/a&gt; in a const context can be found
+on the &lt;a href=&quot;https://github.com/rust-lang/const-eval&quot;&gt;&lt;code&gt;const-eval&lt;/code&gt;&lt;/a&gt; repo.&lt;/p&gt;
+&lt;p&gt;It is not trivial to guarantee properties about the value of a variable when
+complex control flow such as loops and conditionals is involved. Implementing
+this feature required extending the existing dataflow framework in rust so
+that we could properly track the value of each local across the control-flow
+graph. At the moment, the analysis is very conservative, especially when values are
+moved in and out of compound data types. For example, the following will not
+compile, even when the feature gate is enabled.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const fn imprecise() -&amp;gt; Vec&amp;lt;i32&amp;gt; {
+    let tuple: (Vec&amp;lt;i32&amp;gt;) = (Vec::new(),);
+    tuple.0
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Even though the &lt;code&gt;Vec&lt;/code&gt; created by &lt;code&gt;Vec::new&lt;/code&gt; will never actually be dropped
+inside the &lt;code&gt;const fn&lt;/code&gt;, we don't detect that all fields of &lt;code&gt;tuple&lt;/code&gt; have been moved
+out of, and thus conservatively assume that the drop impl for &lt;code&gt;tuple&lt;/code&gt; will run.
+While this particular case is trivial, there are other, more complex ones that
+would require a more comprehensive solution. It is an open question how precise
+we want to be here, since more precision means longer compile times, even for
+users that have no need for more expressiveness.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Dylan MacKenzie</name>
+        </author>
+    </entry>
     
     <entry>
         <title>Upcoming compiler-team design meetings</title>
@@ -526,88 +659,6 @@ Each week, we have general announcements from the team followed by check-ins fro
 
         <author>
             <name>Wesley Wiser</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>2019-11-05 Infrastructure Team Meeting</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/06/infra-team-meeting.html" type="text/html" title="2019-11-05 Infrastructure Team Meeting" />
-        <published>2019-11-06T00:00:00Z</published>
-        <updated>2019-11-06T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/11/06/infra-team-meeting.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/06/infra-team-meeting.html">&lt;p&gt;Meeting run by shepmaster. Minutes written by pietroalbini.&lt;br /&gt;
-Attending: aidanhs, alexcrichton, kennytm, Mark-Simulacrum, pietroalbini, shepmaster&lt;br /&gt;
-&lt;a href=&quot;https://discordapp.com/channels/442252698964721669/443148319431065610/641335927721033732&quot;&gt;Start of the conversation&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#removing-msys2-ca-certificates-workaround-p-high-issue)&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;removing-msys2-ca-certificates-workaround-p-high-issue)&quot;&gt;&lt;/a&gt;Removing MSYS2 ca-certificates workaround (P-high issue)&lt;/h2&gt;
-&lt;p&gt;A few weeks ago our CI broke due to a broken &lt;code&gt;ca-certificates&lt;/code&gt; MSYS2 package,
-which caused all Windows builders to fail. The temporary patch was to install a
-vendored copy of that package, and since it’s not needed anymore pietroalbini
-landed a PR this week removing the hack from our CI configuration.&lt;/p&gt;
-&lt;p&gt;The other part of the issue is figuring out whether to vendor MSYS2 and MinGW
-as a whole, but there is the issue of keeping the mirrors sort of up to date,
-and we don’t have a clear idea on how to fix that at the moment. We decided to
-downgrade the issue to P-medium and to talk about mirroring and vendoring at
-the All Hands 2020. In preparation of that meeting it will be useful to audit
-what we mirror at the moment and how old that is, but it’s not urgent and
-nobody has the time to work on it right now.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#figuring-out-data-retention-on-azure-pipelines-p-medium-issue)&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;figuring-out-data-retention-on-azure-pipelines-p-medium-issue)&quot;&gt;&lt;/a&gt;Figuring out data retention on Azure Pipelines (P-medium issue)&lt;/h2&gt;
-&lt;p&gt;This is not yet an issue, as the current retention is configured to 2 years.
-We’re waiting on some talks with Microsoft to settle before starting to poke
-people about this again.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#re-enable-llvmdebug-assertions-on-slow-builders-(p-medium-issue)&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;re-enable-llvmdebug-assertions-on-slow-builders-(p-medium-issue)&quot;&gt;&lt;/a&gt;Re-enable LLVM/debug assertions on slow builders (P-medium issue)&lt;/h2&gt;
-&lt;p&gt;We still don’t have the time budget to enable them back, but increasing the
-core count should allow us to do that.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#new-server-for-perf&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;new-server-for-perf&quot;&gt;&lt;/a&gt;New server for perf&lt;/h2&gt;
-&lt;p&gt;alexcrichton ordered an
-&lt;a href=&quot;https://www.hetzner.com/dedicated-rootserver/ax41-nvme&quot;&gt;AX41-NVMe&lt;/a&gt; bare metal
-server from Hetzner as a replacement benchmarking machine for perf, paid by
-Mozilla. We’re waiting on Hetzner to give us access to it before simulacrum can
-try it out and configure it. If we don’t get access in a few days alexcrichton
-is going to ping them.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#lifecycle-policy-for-staticrust-lang.org&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;lifecycle-policy-for-staticrust-lang.org&quot;&gt;&lt;/a&gt;Lifecycle policy for static.rust-lang.org&lt;/h2&gt;
-&lt;p&gt;static.rust-lang.org is backed by a S3 bucket, and since 2016 versioning is
-enabled on the bucket to prevent issues with accidental file deletions. Some of
-the files in that bucket are overridden each day though (for example nightly
-compilers), keeping a bunch of past versions stored. Those past versions are
-useless as there isn’t an easy way to get them from the CDN, and the files are
-also stored separately in other places on that bucket. Everyone agreed we
-should enable lifecycle policy to delete those useless files, and we reached a
-consensus on deleting them after three months. This won’t be noticeable by end
-users, installing old nightlies by date will still work.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#what-to-do-with-the-rust-lang-ci-s3-bucket&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;what-to-do-with-the-rust-lang-ci-s3-bucket&quot;&gt;&lt;/a&gt;What to do with the rust-lang-ci S3 bucket&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;rust-lang-ci&lt;/code&gt; is a really old and currently unused S3 bucket which was used to
-store CI artifacts before we migrated them to &lt;code&gt;rust-lang-ci2&lt;/code&gt;. There are still
-some files in there, so we enabled bucket logging for a month to see how
-frequent files there were accessed.&lt;/p&gt;
-&lt;p&gt;Turns out, we had a total of 86 successful requests in a month, split between:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;69 requests were accessing cargo builds of 1.14.0&lt;/li&gt;
-&lt;li&gt;17 requests were accessing old CI mirrors&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Due to the low traffic we decided to remove those old CI mirrors, but for the
-cargo builds the question is more complicated. Due to a bug in the manifest
-generation back then, installing Rust 1.14.0 from rustup actually downloads
-Cargo from the bucket instead of the CDN, and removing those files would
-permanently break installing Rust 1.14.0. There was disagreement on whether to
-do that inside the team, and we reached the decision to wait until pietroalbini
-investigates whether redirects are feasible to configure in S3.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#early-feedback-on-pietroalbinis-wip-ci-generate-branch&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;early-feedback-on-pietroalbinis-wip-ci-generate-branch&quot;&gt;&lt;/a&gt;Early feedback on pietroalbini’s WIP ci-generate branch&lt;/h2&gt;
-&lt;p&gt;pietroalbini is working on a branch that implements a generator for our CI
-configuration, from a simplified custom DSL
-(&lt;a href=&quot;https://github.com/pietroalbini/rust/tree/ci-generate&quot;&gt;branch&lt;/a&gt; -
-&lt;a href=&quot;https://github.com/pietroalbini/rust/tree/ci-generate/src/tools/generate-ci-config&quot;&gt;documentation&lt;/a&gt;).
-While the generator has a number of small benefits for us, the main driver
-between the creation of the branch is to work around some limitations in GitHub
-Actions’s configuration syntax, namely the lack of importable templates. There
-wasn’t time to properly discuss this so we deferred to next week.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#revisiting-meeting-run-rotation&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;revisiting-meeting-run-rotation&quot;&gt;&lt;/a&gt;Revisiting meeting run rotation&lt;/h2&gt;
-&lt;p&gt;A month ago we started rotating who runs the meetings, intending to revisit the
-decision today. The team felt either neutral or positive about the idea, so
-we’ll keep doing that for a while. aidanhs is going to run the next meeting.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Pietro Albini</name>
         </author>
     </entry>
     
