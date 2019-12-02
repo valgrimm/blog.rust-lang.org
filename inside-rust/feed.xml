@@ -10,8 +10,92 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-11-27T19:27:07Z</updated>
+    <updated>2019-12-02T22:26:55Z</updated>
 
+    
+    <entry>
+        <title>Constant propagation is now on by default in nightly</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/12/02/const-prop-on-by-default.html" type="text/html" title="Constant propagation is now on by default in nightly" />
+        <published>2019-12-02T00:00:00Z</published>
+        <updated>2019-12-02T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/12/02/const-prop-on-by-default.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/12/02/const-prop-on-by-default.html">&lt;p&gt;I'm pleased to announce that the &lt;a href=&quot;https://blog.rust-lang.org/2016/04/19/MIR.html&quot;&gt;Mid-level IR&lt;/a&gt; (MIR) constant propagation pass has been &lt;a href=&quot;https://github.com/rust-lang/rust/pull/66074&quot;&gt;switched on&lt;/a&gt; by default on Rust nightly which will eventually become Rust 1.41!&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#what-is-constant-propagation&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;what-is-constant-propagation&quot;&gt;&lt;/a&gt;What is constant propagation?&lt;/h2&gt;
+&lt;p&gt;Constant propagation is an optimization where the compiler recognizes code that can be run at compile time, evaluates it, and replaces the original code with the result.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const X: u32 = 2;
+
+let y = X + X;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Rather than evaluating &lt;code&gt;X + X&lt;/code&gt; at runtime, the compiler can recognize that the value of &lt;code&gt;X&lt;/code&gt; is known at compile time and replace it with the correct value resulting in:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const X: u32 = 2;
+
+let y = 4;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This optimization is opportunistic and automatically recognizes constants even when they are not declared as such:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;struct Point {
+  x: u32,
+  y: u32,
+}
+
+let a = 2 + 2; // optimizes to 4
+let b = [0, 1, 2, 3, 4, 5][3]; // optimizes to 3
+let c = (Point { x: 21, y: 42 }).y; // optimizes to 42
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;&lt;a href=&quot;#propagation-into-control-flow&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;propagation-into-control-flow&quot;&gt;&lt;/a&gt;Propagation into control flow&lt;/h2&gt;
+&lt;p&gt;The constant propagation pass also handles propagating into control flow.
+For example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const Foo: Option&amp;lt;u8&amp;gt; = B(12);
+
+let x = match Foo {
+   Bar::A =&amp;gt; panic!(&amp;quot;no value&amp;quot;),
+   Bar::B(v) =&amp;gt; v,
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;becomes:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const Foo: Option&amp;lt;u8&amp;gt; = B(12);
+
+let x = 12;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is very helpful for checked math, the default in &lt;code&gt;debug&lt;/code&gt; mode, which introduces additional control flow after every operation:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;let x = 2 + 4 * 6;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;actually operates like this with overflow checking enabled:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;let (_tmp0, overflowed) = CheckedMultiply(4, 6);
+assert!(!overflowed, &amp;quot;attempt to multiply with overflow&amp;quot;);
+
+let (_tmp1, overflowed) = CheckedAdd(_tmp0, 2);
+assert!(!overflowed, &amp;quot;attempt to add with overflow&amp;quot;);
+
+let x = _temp1;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;which adds quite a bit of control flow!
+Constant propagation evaluates the math at compile time and reduces this to:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;let _tmp0 = 24;
+assert!(!false, &amp;quot;attempt to multiply with overflow&amp;quot;);
+
+let _tmp1 = 26;
+assert!(!false, &amp;quot;attempt to add with overflow&amp;quot;);
+
+let x = 26;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;which is further reduced to just:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;let x = 26;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;&lt;a href=&quot;#compiler-performance&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;compiler-performance&quot;&gt;&lt;/a&gt;Compiler performance&lt;/h2&gt;
+&lt;p&gt;As you might have guessed, reducing the amount of control flow processed by the Rust compiler has a positive effect on compile times.
+We're seeing 2-10% improvement on a variety of test cases in both debug and release mode.
+Even though LLVM has its own constant propagation pass, we see improvements because our pass operates on MIR while it is still generic.
+The more concrete instances of a generic function that are instantiated, the larger the payoff from this optimization.&lt;/p&gt;
+&lt;p&gt;We've suspected for a while that the verbose LLVM IR the Rust compiler generates contributes considerably to long compilation times.
+By implementing optimizations like this, we believe there is significant potential to lower compile times by generating better LLVM IR.
+If you'd like to get involved with the MIR Optimizations working group, stop by our &lt;a href=&quot;https://rust-lang.zulipchat.com/#narrow/stream/189540-t-compiler.2Fwg-mir-opt&quot;&gt;Zulip channel&lt;/a&gt; and say hello!&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Wesley Wiser</name>
+        </author>
+    </entry>
     
     <entry>
         <title>`if` and `match` in constants on nightly rust</title>
@@ -605,56 +689,6 @@ Each week, we have general announcements from the team followed by check-ins fro
 &lt;p&gt;We ran out of time this week to have a check-in from this working group.&lt;/p&gt;
 &lt;h3&gt;&lt;a href=&quot;#wg-rfc-2229&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;wg-rfc-2229&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://rust-lang.github.io/compiler-team/working-groups/rfc-2229/&quot;&gt;wg-rfc-2229&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This working group is currently on a pause.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Wesley Wiser</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>2019-10-31 Compiler Team Triage Meeting</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/07/compiler-team-meeting.html" type="text/html" title="2019-10-31 Compiler Team Triage Meeting" />
-        <published>2019-11-07T00:00:00Z</published>
-        <updated>2019-11-07T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/11/07/compiler-team-meeting.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/07/compiler-team-meeting.html">&lt;p&gt;The compiler team had our weekly triage meeting on 2019-10-31.
-You can find the &lt;a href=&quot;https://rust-lang.github.io/compiler-team/minutes/triage-meeting/2019-10-31/&quot;&gt;minutes&lt;/a&gt; on the &lt;a href=&quot;https://github.com/rust-lang/compiler-team&quot;&gt;compiler-team&lt;/a&gt; repository.
-Each week, we have general announcements from the team followed by check-ins from two of the compiler team working groups.&lt;/p&gt;
-&lt;h1&gt;&lt;a href=&quot;#2019-10-31&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;2019-10-31&quot;&gt;&lt;/a&gt;2019-10-31&lt;/h1&gt;
-&lt;h2&gt;&lt;a href=&quot;#announcments&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;announcments&quot;&gt;&lt;/a&gt;Announcments&lt;/h2&gt;
-&lt;p&gt;Rust 1.39 ships on Thursday!&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#working-group-sync&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;working-group-sync&quot;&gt;&lt;/a&gt;Working group sync&lt;/h2&gt;
-&lt;br/&gt;
-&lt;h3&gt;&lt;a href=&quot;#wg-pgo&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;wg-pgo&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://rust-lang.github.io/compiler-team/working-groups/pgo/&quot;&gt;wg-pgo&lt;/a&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;PGO is available in the stable compiler. Docs are in the rustc-guide and the rustc-book&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Unfortunately we don't observe significant performance gains from applying it (except for tiny synthetic test cases).&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/michaelwoerister&quot;&gt;@michaelwoerister&lt;/a&gt; asked for people to try PGO on irlo but haven't gotten a lot of feedback.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;There is one interesting theory that Rust doesn't profit as much as C++ because it defaults to having fewer compilation units and thus can make better inlining decisions in the non-PGO case.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The working group will probably wind down as &lt;a href=&quot;https://github.com/michaelwoerister&quot;&gt;@michaelwoerister&lt;/a&gt; don't have time to pursue further and there are no actual known issues in the implementation.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&quot;https://rust-lang.zulipchat.com/#narrow/stream/131828-t-compiler/topic/weekly.20meeting.202019-10-31.20.2354818/near/179539153&quot;&gt;Link to full discussion&lt;/a&gt;&lt;/p&gt;
-&lt;h3&gt;&lt;a href=&quot;#wg-pipelining&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;wg-pipelining&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://rust-lang.github.io/compiler-team/working-groups/pipelining/&quot;&gt;wg-pipelining&lt;/a&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Pipelining support has shipped in Rust 1.38.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The working group is winding down.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&quot;https://rust-lang.zulipchat.com/#narrow/stream/131828-t-compiler/topic/weekly.20meeting.202019-10-31.20.2354818/near/179539371&quot;&gt;Link to full discussion&lt;/a&gt;&lt;/p&gt;
 </content>
 
         <author>
