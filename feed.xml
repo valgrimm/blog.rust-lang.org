@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Team.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-12-03T18:47:04Z</updated>
+    <updated>2019-12-03T18:49:50Z</updated>
 
     
     <entry>
@@ -19,10 +19,10 @@
         <published>2019-12-03T00:00:00Z</published>
         <updated>2019-12-03T00:00:00Z</updated>
         <id>https://blog.rust-lang.org/2019/12/03/survey-launch.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/2019/12/03/survey-launch.html">&lt;p&gt;It's that time again! Time for us to take a look at how the Rust project is doing, and what we should plan for the future. The Rust Community Team is pleased to announce our &lt;a href=&quot;https://docs.google.com/forms/d/1iGnf8Mmf4JRggOJ3E7iZlBLsgeLxIYzaI1caiFHQ6OQ/&quot;&gt;2019 State of Rust Survey&lt;/a&gt;! Whether or not you use Rust today, we want to know your opinions. Your responses will help the project understand its strengths and weaknesses and establish development priorities for the future.&lt;/p&gt;
+        <content type="html" xml:base="https://blog.rust-lang.org/2019/12/03/survey-launch.html">&lt;p&gt;It's that time again! Time for us to take a look at how the Rust project is doing, and what we should plan for the future. The Rust Community Team is pleased to announce our &lt;a href=&quot;https://docs.google.com/forms/d/1iGnf8Mmf4JRggOJ3E7iZlBLsgeLxIYzaI1caiFHQ6OQ/viewform&quot;&gt;2019 State of Rust Survey&lt;/a&gt;! Whether or not you use Rust today, we want to know your opinions. Your responses will help the project understand its strengths and weaknesses and establish development priorities for the future.&lt;/p&gt;
 &lt;p&gt;Completing this survey should take about 10–15 minutes and is anonymous unless you choose to give us your contact information. We will be accepting submissions until December 16th, and we will write up our findings a month or so afterwards to &lt;a href=&quot;https://blog.rust-lang.org&quot;&gt;blog.rust-lang.org&lt;/a&gt;. You can also check out &lt;a href=&quot;https://blog.rust-lang.org/2018/11/27/Rust-survey-2018.html&quot;&gt;last year’s results&lt;/a&gt;.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://docs.google.com/forms/d/1iGnf8Mmf4JRggOJ3E7iZlBLsgeLxIYzaI1caiFHQ6OQ/&quot;&gt;English&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.google.com/forms/d/1iGnf8Mmf4JRggOJ3E7iZlBLsgeLxIYzaI1caiFHQ6OQ/viewform&quot;&gt;English&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://wj.qq.com/s2/5080757/5237&quot;&gt;Simplified Chinese&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://docs.google.com/forms/d/e/1FAIpQLSfMugzbkuwY_x2sKm1Jt2Y569ULG2mLE_hOzZFIUpjO1vXmzg/viewform?hl=zh-TW&quot;&gt;Traditional Chinese&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://docs.google.com/forms/d/e/1FAIpQLSeiIlKDo-3PGS4yxAQ2PwIL1NmPSua0AnktgaaI2ZWa1iOC2g/viewform?hl=fr&quot;&gt;French&lt;/a&gt;&lt;/li&gt;
