@@ -10,8 +10,32 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-12-03T17:23:07Z</updated>
+    <updated>2019-12-03T17:27:00Z</updated>
 
+    
+    <entry>
+        <title>Governance Working Group Update</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/12/03/governance-wg-meeting.html" type="text/html" title="Governance Working Group Update" />
+        <published>2019-12-03T00:00:00Z</published>
+        <updated>2019-12-03T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/12/03/governance-wg-meeting.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/12/03/governance-wg-meeting.html">&lt;p&gt;Hello everyone! Two weeks ago the governance working group met. Here are the large issues we discussed and information on our next meeting.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Edit:&lt;/em&gt; This post was prepared last week but was accidentally not merged. Apologies for the short notice about the topic of this week's meeting! --nikomatsakis&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#large-issues-discussed&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;large-issues-discussed&quot;&gt;&lt;/a&gt;Large Issues Discussed&lt;/h2&gt;
+&lt;p&gt;We reviewed the &lt;a href=&quot;https://rust-lang.github.io/rfcs/1068-rust-governance.html&quot;&gt;current governance RFC&lt;/a&gt; and noted governance items that have been added since the RFC was written. We also noted things that have changed or have just not happened, as well as things that could be improved. Please see the &lt;a href=&quot;https://github.com/rust-lang/wg-governance/blob/master/minutes/2019.11.19.md&quot;&gt;full notes&lt;/a&gt; for more details.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#next-meeting&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;next-meeting&quot;&gt;&lt;/a&gt;Next Meeting&lt;/h2&gt;
+&lt;p&gt;Next meeting will be at &lt;strong&gt;22:00 UTC on Tuesday, December 3&lt;/strong&gt; and will be focused on the need for a &lt;a href=&quot;https://github.com/rust-lang/wg-governance/issues/4&quot;&gt;GitHub Access Policy&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We'd like to encourage anyone who's interested, regardless of their
+previous experience to come to the &lt;code&gt;#wg-governance&lt;/code&gt;
+channel on Discord to attend the meeting. (Our meetings are done over a video
+call with Zoom, but we use the Discord channel to organise ourselves).&lt;/p&gt;
+&lt;p&gt;If there are other issues you would like to see us discuss or discuss with us, please mention them in a comment on &lt;a href=&quot;https://github.com/rust-lang/wg-governance/issues/29&quot;&gt;this GitHub issue&lt;/a&gt;.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Nell Shamrell-Harrington</name>
+        </author>
+    </entry>
     
     <entry>
         <title>Constant propagation is now on by default in nightly</title>
@@ -659,40 +683,6 @@ not available to attend the working group's meetings.&lt;/p&gt;
 
         <author>
             <name>Erin Power</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>2019-11-07 Compiler Team Triage Meeting</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/11/compiler-team-meeting.html" type="text/html" title="2019-11-07 Compiler Team Triage Meeting" />
-        <published>2019-11-11T00:00:00Z</published>
-        <updated>2019-11-11T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/11/11/compiler-team-meeting.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/11/compiler-team-meeting.html">&lt;p&gt;The compiler team had our weekly triage meeting on 2019-11-07.
-You can find the &lt;a href=&quot;https://rust-lang.github.io/compiler-team/minutes/triage-meeting/2019-11-07/&quot;&gt;minutes&lt;/a&gt; on the &lt;a href=&quot;https://github.com/rust-lang/compiler-team&quot;&gt;compiler-team&lt;/a&gt; repository.
-Each week, we have general announcements from the team followed by check-ins from two of the compiler team working groups.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#announcements&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;announcements&quot;&gt;&lt;/a&gt;Announcements&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/pnkfelix&quot;&gt;@pnkfelix&lt;/a&gt; is moving to the US and will be working in the Eastern timezone.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/wesleywiser&quot;&gt;@wesleywiser&lt;/a&gt; has been working on the constant propagation pass and wants to &lt;a href=&quot;https://github.com/rust-lang/rust/pull/66074&quot;&gt;turn it on&lt;/a&gt; for debug &amp;amp; release builds to improve compilation time.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Rust 1.39 has shipped with &lt;code&gt;async&lt;/code&gt;/&lt;code&gt;await&lt;/code&gt; support and other goodies.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;&lt;a href=&quot;#working-group-sync&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;working-group-sync&quot;&gt;&lt;/a&gt;Working group sync&lt;/h2&gt;
-&lt;br/&gt;
-&lt;h3&gt;&lt;a href=&quot;#wg-polonius&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;wg-polonius&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://rust-lang.github.io/compiler-team/working-groups/polonius/&quot;&gt;wg-polonius&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;We ran out of time this week to have a check-in from this working group.&lt;/p&gt;
-&lt;h3&gt;&lt;a href=&quot;#wg-rfc-2229&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;wg-rfc-2229&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://rust-lang.github.io/compiler-team/working-groups/rfc-2229/&quot;&gt;wg-rfc-2229&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;This working group is currently on a pause.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Wesley Wiser</name>
         </author>
     </entry>
     
