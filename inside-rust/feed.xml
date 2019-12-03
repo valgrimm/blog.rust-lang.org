@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-12-02T22:26:55Z</updated>
+    <updated>2019-12-03T14:16:57Z</updated>
 
     
     <entry>
@@ -45,15 +45,15 @@ let c = (Point { x: 21, y: 42 }).y; // optimizes to 42
 &lt;h2&gt;&lt;a href=&quot;#propagation-into-control-flow&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;propagation-into-control-flow&quot;&gt;&lt;/a&gt;Propagation into control flow&lt;/h2&gt;
 &lt;p&gt;The constant propagation pass also handles propagating into control flow.
 For example:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const Foo: Option&amp;lt;u8&amp;gt; = B(12);
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const Foo: Option&amp;lt;u8&amp;gt; = Some(12);
 
 let x = match Foo {
-   Bar::A =&amp;gt; panic!(&amp;quot;no value&amp;quot;),
-   Bar::B(v) =&amp;gt; v,
+   None =&amp;gt; panic!(&amp;quot;no value&amp;quot;),
+   Some(v) =&amp;gt; v,
 };
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;becomes:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const Foo: Option&amp;lt;u8&amp;gt; = B(12);
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;const Foo: Option&amp;lt;u8&amp;gt; = Some(12);
 
 let x = 12;
 &lt;/code&gt;&lt;/pre&gt;
