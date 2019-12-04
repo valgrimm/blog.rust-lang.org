@@ -10,7 +10,7 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-12-03T18:49:49Z</updated>
+    <updated>2019-12-04T13:37:04Z</updated>
 
     
     <entry>
@@ -401,6 +401,60 @@ the coming days.&lt;/p&gt;
     </entry>
     
     <entry>
+        <title>2019-11-18 IDE team meeting</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/19/ide-future.html" type="text/html" title="2019-11-18 IDE team meeting" />
+        <published>2019-11-19T00:00:00Z</published>
+        <updated>2019-11-19T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/11/19/ide-future.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/19/ide-future.html">&lt;p&gt;Meeting run by nikomatsakis. Minutes written by nikomatsakis.
+Attending: nikomatsakis, pnkfelix, Xanewok, matklad
+&lt;a href=&quot;https://hackmd.io/fAnj6pNqRRGIyDQ4el5tcQ&quot;&gt;Notes&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;&lt;a href=&quot;#the-rust-ide&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;the-rust-ide&quot;&gt;&lt;/a&gt;The Rust IDE&lt;/h1&gt;
+&lt;p&gt;In the last compiler/IDE team meeting we've discussed the overall direction for IDE support in Rust.&lt;/p&gt;
+&lt;p&gt;At the moment, the two IDEs developed as part of the Rust project are Rust Language Server (RLS) and rust-analyzer.
+The former is currently being shipped with the Rust distribution while the latter serves as a foundation for the &amp;quot;RLS 2.0&amp;quot; working group.&lt;/p&gt;
+&lt;p&gt;Unfortunately, these are actively developed in separation without much code-sharing between the two.
+We'd like to change that and to find out how we can unify these efforts.
+Therefore, we've been having a series of talks with the aim of elaborating the design space and creating a proposal for how to improve the situation going forward.&lt;/p&gt;
+&lt;p&gt;This blog post gives a short summary from our most recent meeting.&lt;/p&gt;
+&lt;h1&gt;&lt;a href=&quot;#why-2-ides&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;why-2-ides&quot;&gt;&lt;/a&gt;Why 2 IDEs?&lt;/h1&gt;
+&lt;p&gt;The main benefits of rust-analyzer is greater performance (because of fully-lazy compilation model) and somewhat richer feature-set (due to more flexible analysis API).
+The main benefits of RLS is precision (it uses &lt;code&gt;rustc&lt;/code&gt; under the hood).
+Additionally, RLS is the main consumer of save-analysis infrastructure, which is a good fit for tools which need a static view of the codebase, such as &lt;a href=&quot;https://github.com/rust-dev-tools/cargo-src&quot;&gt;cargo-src&lt;/a&gt; or &lt;a href=&quot;https://code.visualstudio.com/blogs/2019/02/19/lsif&quot;&gt;lsif&lt;/a&gt;.&lt;/p&gt;
+&lt;h1&gt;&lt;a href=&quot;#save-analysis&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;save-analysis&quot;&gt;&lt;/a&gt;Save-analysis&lt;/h1&gt;
+&lt;p&gt;What is &amp;quot;save-analysis&amp;quot;?
+It is an unstable format which rustc uses to record information about the compiled code.
+It contains a pretty high-level information.
+For example, for each identifier in the source-crate, save-analyzer will map this identifier to a definition and list of usages.
+&lt;code&gt;env RUSTFLAGS=&amp;quot;-Zunstable-options -Zsave-analysis&amp;quot; cargo check&lt;/code&gt; can be used to instruct &lt;code&gt;rustc&lt;/code&gt; to produce save-analysis files (in JSON format).
+Because save-analysis is produced directly from rustc iternal data structures, it is guaranteed to be correct (modulo bugs in rustc itself).&lt;/p&gt;
+&lt;h1&gt;&lt;a href=&quot;#query-model&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;query-model&quot;&gt;&lt;/a&gt;Query model&lt;/h1&gt;
+&lt;p&gt;The fundamental problem with save-analysis is that it is computed for the whole crate at once.
+This is pretty slow for non-trivial crates, and is also wasteful.
+At any given moment in time, only a small fraction of analysis information is really required.
+rust-analyzer solves this by using &lt;a href=&quot;https://github.com/salsa-rs/salsa&quot;&gt;&lt;code&gt;salsa&lt;/code&gt;&lt;/a&gt; queries for code analysis.
+The result is a compilation model which is fully lazy across the whole crate graph.
+This model is similar to what rustc is using internally, but is more lazy both &amp;quot;vertically&amp;quot; and &amp;quot;horizontally&amp;quot;.
+Vertically, &lt;code&gt;rustc&lt;/code&gt; starts to be incremental only after parsing and macro expansion; rust-analyzer is incremental on per-file basis.
+Horizontally, &lt;code&gt;rustc&lt;/code&gt; compiles one crate at a time; rust-analyzer uses queries for the whole crate graph.&lt;/p&gt;
+&lt;h1&gt;&lt;a href=&quot;#way-forward&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;way-forward&quot;&gt;&lt;/a&gt;Way forward&lt;/h1&gt;
+&lt;p&gt;Our current hypothesis is that it is possible to integrate both approaches without doubling the engineering effort.
+Specifically, we will add an option to rust-analyzer to use save-analysis for find-usages and rename functionality.
+That way, we'll get precise results for most important queries, without slowing down completion.
+Unlike RLS, however, rust-analyzer will not link to rustc and instead will rely on cargo for running the compiler and producing save-analysis data.
+If this approach works, we will consider freezing RLS and focusing fully on rust-analyzer.
+Long term, the plan is to unify the save-analysis fallback path and the lazy analysis.&lt;/p&gt;
+&lt;p&gt;In parallel to this RLS/rust-analyzer unification effort, we continue to pursue rustc library-ification, with a specific focus on traits solving (via chalk) and type inference.
+&amp;quot;Library-ification&amp;quot; is a term we've been using for the process of extracting code out of rustc into re-usable libaries which can be shared by both rustc and rust-analyzer.
+The goal is to use library-ification to gradually reduce the amount of duplicated code between rustc and rust-analyzer, with the goal of eventually either having a single code-base, or having the vast majority of the logic be shared.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Aleksey Kladov, Igor Matuszewski</name>
+        </author>
+    </entry>
+    
+    <entry>
         <title>2019-11-14 Compiler Team Triage Meeting</title>
         <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/19/compiler-team-meeting.html" type="text/html" title="2019-11-14 Compiler Team Triage Meeting" />
         <published>2019-11-19T00:00:00Z</published>
@@ -623,66 +677,6 @@ rustc's CI.&lt;/p&gt;
 
         <author>
             <name>Pietro Albini</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>Governance WG Call For Participation</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/13/goverance-wg-cfp.html" type="text/html" title="Governance WG Call For Participation" />
-        <published>2019-11-13T00:00:00Z</published>
-        <updated>2019-11-13T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/11/13/goverance-wg-cfp.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/13/goverance-wg-cfp.html">&lt;p&gt;Hello everyone, the governance working group has been working a few efforts, but
-we haven't made as much progress as we would have liked over the past few
-months, so we are going to try out a new process and meeting agenda aimed at
-trying to get more work done in the time we know we have.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#new-meeting-structure&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;new-meeting-structure&quot;&gt;&lt;/a&gt;New Meeting Structure&lt;/h2&gt;
-&lt;p&gt;Previously we have been doing most of our work async while using our bi-weekly
-meeting call to triage tasks. The problem we ran into with this is that a lot of
-the members also heavy contributors to the Rust project as a whole, and it can
-be can hard for some people to schedule time write an initial draft.&lt;/p&gt;
-&lt;p&gt;To address this instead of triaging during the meeting and working on tasks in
-async, we're going to hold focused topic based meetings, and use the time between
-meetings, to publish posts like this and to research and prepare for the next
-topic. To help do this we're going to extend our current meeting duration from
-30 minutes to an hour. (The meeting will still be every two weeks.)&lt;/p&gt;
-&lt;p&gt;The current goals are to documenting the de-facto governance structure, provide
-the result as a RFC and then if merged provide a version on
-&lt;a href=&quot;https://forge.rust-lang.org/&quot;&gt;forge.rust-lang.org&lt;/a&gt; so that it has greater visbility. We also want to
-schedule people involved in Rust and other governance structures to come and
-talk about their experiences.&lt;/p&gt;
-&lt;p&gt;For deciding what topics, we're going to rotate who takes the lead for each
-meeting. It's that person's responsibility to decide the topic and to
-prepare a call for participation similar to this post informing people of
-the topic and how they might best prepare if they wish to join.&lt;/p&gt;
-&lt;p&gt;We also hope that having a focused topic will reduce any barrier of expected
-knowledge in order to participate and contribute. With that said let's talk
-about the topic for next meeting.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#reviewing--examining-previous-governance-rfcs&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;reviewing--examining-previous-governance-rfcs&quot;&gt;&lt;/a&gt;Reviewing &amp;amp; Examining Previous Governance RFCs&lt;/h2&gt;
-&lt;p&gt;Our first topic for new meeting is going to be to read &lt;a href=&quot;https://rust-lang.github.io/rfcs/1068-rust-governance.html&quot;&gt;RFC 1068&lt;/a&gt;, the
-original Rust Governance RFC, review how accurate it is to today's structure,
-and see any if there are questions that we have that it doesn't answer. Here
-are some other relevant RFCs for additional context:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/rust-lang/rfcs/blob/26197104b7bb9a5a35db243d639aee6e46d35d75/text/1728-north-star.md&quot;&gt;&amp;quot;North Star&amp;quot; RFC&lt;/a&gt; lays out the Rust roadmap process.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://rust-lang.github.io/rfcs/2689-compiler-team-contributors.html&quot;&gt;Compiler contributors RFC&lt;/a&gt; details the process of contributing to the
-compiler and progression towards joining the compiler team.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://rust-lang.github.io/rfcs/1589-rustc-bug-fix-procedure.html&quot;&gt;Compiler bug fix procedure&lt;/a&gt; defines the best practices for making a bug fix
-to the compiler.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Our next meeting is going to be at &lt;strong&gt;22:00 UTC on Tuesday, November 19th&lt;/strong&gt;
-and we'd like to encourage anyone who's interested, regardless of their
-previous experience to read those RFCs and come to the &lt;code&gt;#wg-governance&lt;/code&gt;
-channel on discord to attend the meeting. (Our meetings are done over a video
-call with Zoom, but we use the discord channel to organise ourselves).&lt;/p&gt;
-&lt;p&gt;If some reason you know you won't be able to attend these meetings but would
-still like to participate. Please feel free to post any questions about Rust's
-governance as &lt;a href=&quot;https://github.com/rust-lang/wg-governance/issues?q=is%3Aissue+is%3Aopen+label%3AQuestion&quot;&gt;issues on our GitHub repository&lt;/a&gt;, even if you are
-not available to attend the working group's meetings.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Erin Power</name>
         </author>
     </entry>
     
