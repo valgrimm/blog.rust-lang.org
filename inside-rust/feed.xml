@@ -10,8 +10,36 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-12-04T13:37:50Z</updated>
+    <updated>2019-12-09T16:09:10Z</updated>
 
+    
+    <entry>
+        <title>Announcing the Docs.rs Team</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/12/09/announcing-the-docsrs-team.html" type="text/html" title="Announcing the Docs.rs Team" />
+        <published>2019-12-09T00:00:00Z</published>
+        <updated>2019-12-09T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/12/09/announcing-the-docsrs-team.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/12/09/announcing-the-docsrs-team.html">&lt;p&gt;Today we're announcing a brand new team: The Docs.rs Team!&lt;/p&gt;
+&lt;p&gt;Previously, &lt;a href=&quot;https://docs.rs/&quot;&gt;Docs.rs&lt;/a&gt; has been managed by the Rustdoc Team, as many of the initial concerns of
+Docs.rs were shared by Rustdoc as Docs.rs was being brought into team maintainership. However, as
+time went on, those concerns started to diverge more and more, and so did the people who contributed
+to either tool.&lt;/p&gt;
+&lt;p&gt;The new Docs.rs Team will be responsible for the operations and development for &lt;a href=&quot;https://docs.rs/&quot;&gt;Docs.rs&lt;/a&gt;, leaving
+the Rustdoc Team to be responsible for the Rustdoc tool itself. &lt;a href=&quot;https://github.com/QuietMisdreavus&quot;&gt;@QuietMisdreavus&lt;/a&gt; will be leading
+the new Docs.rs Team, leaving &lt;a href=&quot;https://github.com/GuillaumeGomez&quot;&gt;@GuillaumeGomez&lt;/a&gt; to lead the Rustdoc Team.&lt;/p&gt;
+&lt;p&gt;Joining QuietMisdreavus on the Docs.rs Team is GuillaumeGomez, coordinating work between Rustdoc and
+Docs.rs; &lt;a href=&quot;https://github.com/onur&quot;&gt;@onur&lt;/a&gt;, the original creator of Docs.rs; &lt;a href=&quot;https://github.com/pietroalbini&quot;&gt;@pietroalbini&lt;/a&gt;, who has coordinated work in
+Docs.rs from the perspective of the Infrastrucure Team; and introducing &lt;a href=&quot;https://github.com/jyn514&quot;&gt;@jyn514&lt;/a&gt;, who has worked to
+improve the developer experience of contributing to Docs.rs by converting the local development
+configuration to use &lt;code&gt;docker-compose&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;To get involved with either team, join us on Discord! The Rustdoc Team hangs out in &lt;a href=&quot;https://discord.gg/4yEYPuT&quot;&gt;&lt;code&gt;#rustdoc&lt;/code&gt;&lt;/a&gt;,
+and the Docs.rs Team hangs out in &lt;a href=&quot;https://discord.gg/2k5vVWn&quot;&gt;&lt;code&gt;#docs-rs&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>QuietMisdreavus</name>
+        </author>
+    </entry>
     
     <entry>
         <title>2019-11-18 IDE team meeting</title>
@@ -634,45 +662,6 @@ the people doing it. The agreement in the meeting is that pietroalbini will try
 to create other proof of concepts, hoping to find a better solution.&lt;/p&gt;
 &lt;h2&gt;&lt;a href=&quot;#new-server-for-perf&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;new-server-for-perf&quot;&gt;&lt;/a&gt;New server for perf&lt;/h2&gt;
 &lt;p&gt;alexcrichton didn’t hear back from Hetzner about the new perf server yet.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Pietro Albini</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>Evaluating GitHub Actions</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/14/evaluating-github-actions.html" type="text/html" title="Evaluating GitHub Actions" />
-        <published>2019-11-14T00:00:00Z</published>
-        <updated>2019-11-14T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/11/14/evaluating-github-actions.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/14/evaluating-github-actions.html">&lt;p&gt;The Rust Infrastructure team is happy to announce that we’re starting an
-evaluation of &lt;a href=&quot;https://github.com/features/actions&quot;&gt;GitHub Actions&lt;/a&gt; as a
-replacement for Azure Pipelines as the CI provider of the
-&lt;a href=&quot;https://github.com/rust-lang/rust&quot;&gt;rust-lang/rust&lt;/a&gt; repository.&lt;/p&gt;
-&lt;p&gt;We’ve been part of the beta of GitHub Actions since the beginning, following
-its development closely and testing it on a lot of smaller repositories in our
-organization, and we’re really satisfied so far with the product. GitHub
-Actions provides most of the features we love about Azure Pipelines, while
-being integrated with GitHub’s UI, permissions and workflows.&lt;/p&gt;
-&lt;p&gt;GitHub has also offered to sponsor a dedicated pool of builders with increased
-resources. Our extensive but time-consuming CI is one of the major pain points
-for compiler contributors, and the additional resources have the potential to
-drastically improve our developers’ experience. We have achieved 60% faster
-builds in preliminary testing thanks to the increased core count in the
-dedicated builder pool, and there is still large room to parallelize and finish
-builds even faster.&lt;/p&gt;
-&lt;p&gt;Our plan is to start running GitHub Actions in parallel with Azure Pipelines in
-the next few weeks, and we’ll keep the community updated as we learn more.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;strong&gt;[Update]&lt;/strong&gt; Some members of the community asked why we're considering to
-switch away from Azure Pipelines so soon after migrating to it. We want to
-reaffirm that we're happy with Pipelines as a product, but both Microsoft and
-GitHub asked us to try GitHub Actions because it's more closely integrated into
-the GitHub workflow that we already use. After we used it for a while in other
-repositories we were satisfied enough to start evaluating a migration for
-rustc's CI.&lt;/p&gt;
 </content>
 
         <author>
