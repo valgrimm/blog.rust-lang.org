@@ -76,22 +76,64 @@
       <div class="highlight"></div>
     </header>
 
-    <div class="publish-date-author">Dec. 03, 2019 &middot; Nell Shamrell-Harrington
+    <div class="publish-date-author">Dec. 10, 2019 &middot; Niko Matsakis
      on behalf of <a href="https://github.com/rust-lang/wg-governance">the Governance WG</a> 
     </div>
 
     <div class="post">
-      <p>Hello everyone! Two weeks ago the governance working group met. Here are the large issues we discussed and information on our next meeting.</p>
-<p><em>Edit:</em> This post was prepared last week but was accidentally not merged. Apologies for the short notice about the topic of this week's meeting! --nikomatsakis</p>
-<h2><a href="#large-issues-discussed" aria-hidden="true" class="anchor" id="large-issues-discussed"></a>Large Issues Discussed</h2>
-<p>We reviewed the <a href="https://rust-lang.github.io/rfcs/1068-rust-governance.html">current governance RFC</a> and noted governance items that have been added since the RFC was written. We also noted things that have changed or have just not happened, as well as things that could be improved. Please see the <a href="https://github.com/rust-lang/wg-governance/blob/master/minutes/2019.11.19.md">full notes</a> for more details.</p>
-<h2><a href="#next-meeting" aria-hidden="true" class="anchor" id="next-meeting"></a>Next Meeting</h2>
-<p>Next meeting will be at <strong>22:00 UTC on Tuesday, December 3</strong> and will be focused on the need for a <a href="https://github.com/rust-lang/wg-governance/issues/4">GitHub Access Policy</a>.</p>
-<p>We'd like to encourage anyone who's interested, regardless of their
-previous experience to come to the <code>#wg-governance</code>
-channel on Discord to attend the meeting. (Our meetings are done over a video
-call with Zoom, but we use the Discord channel to organise ourselves).</p>
-<p>If there are other issues you would like to see us discuss or discuss with us, please mention them in a comment on <a href="https://github.com/rust-lang/wg-governance/issues/29">this GitHub issue</a>.</p>
+      <p>Hello everyone! The governance working group met last week to discuss
+writing out a policy for access privileges on our Github
+repositories. This blog post summarizes that meeting and also
+announces the topic of our next meeting, which takes place on Tuesday,
+December 17, 2019 (<a href="https://calendar.google.com/event?action=TEMPLATE&tmeid=MnNuZDc0NzkzYTBkcDNzY2FkbWgzNjk3a2hfMjAxOTEyMTdUMjIwMDAwWiBtb3ppbGxhLmNvbV85YzZmYzNsNmJoZzhiY3A4Y2FmcnZrM29mNEBn&tmsrc=mozilla.com_9c6fc3l6bhg8bcp8cafrvk3of4%40group.calendar.google.com&scp=ALL">calendar event</a>).</p>
+<p>Also, this week we have a <a href="https://youtu.be/CyYwretwM8E">video recording
+available</a>. (We're going to generally
+try and record meetings when possible.)</p>
+<h2><a href="#next-meeting" aria-hidden="true" class="anchor" id="next-meeting"></a>Next meeting</h2>
+<p>The next meeting will be discussing project groups and their integration into
+the lang team. This is building on a few different posts and ideas:</p>
+<ul>
+<li>XAMPPRocky's draft RFC <a href="https://github.com/rust-lang/wg-governance/blob/master/draft-rfcs/working-group-terminology.md">clarifying our terminology around working groups</a></li>
+<li>My <a href="http://smallcultfollowing.com/babysteps/blog/2019/09/11/aic-shepherds-3-0/">Shepherds 3.0</a> blog post</li>
+<li>The embedded working group's <a href="https://github.com/rust-embedded/wg/pull/378">shepherded projects RFC</a></li>
+<li>My recent blog post about <a href="http://smallcultfollowing.com/babysteps/blog/2019/12/03/aic-improving-the-pre-rfc-process/">an improved pre-RFC
+process</a></li>
+</ul>
+<h2><a href="#access-rights-policy" aria-hidden="true" class="anchor" id="access-rights-policy"></a>Access rights policy</h2>
+<p>I'll summarize our conclusions here. Consult the <a href="https://github.com/rust-lang/wg-governance/">wg-governance</a>
+repository to find more <a href="https://github.com/rust-lang/wg-governance/blob/master/minutes/2019.12.03.md">detailed minutes</a> from our conversation.
+The key conclusions were:</p>
+<ul>
+<li>Where possible, we should stick to a single org (<a href="https://github.com/rust-community/"><code>rust-lang</code></a>).
+<ul>
+<li>In particular, team-specific organizations like
+<a href="https://github.com/rust-dev-tools/"><code>rust-dev-tools</code></a> and <a href="https://github.com/rust-community/"><code>rust-community</code></a> ought to be merged
+into <a href="https://github.com/rust-community/"><code>rust-lang</code></a>.</li>
+<li>Using a single organization makes it much easier to administrate.</li>
+<li>Note that we've already deprecated the <a href="https://github.com/rust-lang-nursery/"><code>rust-lang-nursery</code></a> org</li>
+</ul>
+</li>
+<li>As an exception, we will for now continue having each domain working group
+operate outside of its own org (e.g., <a href="https://github.com/rust-embedded/wg"><code>rust-embedded</code></a>). Those orgs
+are quite active and have a diverse membership and we don't want to
+disturb that for now.
+<ul>
+<li>However, it would be good if each such org added the <code>rust-lang-owner</code> bot
+as an owner, so that the rust infra team has access.</li>
+</ul>
+</li>
+<li>For repositories, we will avoid giving access to individuals, and instead try to
+give access only to entities (teams, working groups, etc) that are created and
+managed by the Rust <a href="https://github.com/rust-lang/team">team</a> repository.
+<ul>
+<li>In general, it is not recommended to give owner or admin access; write access suffices.</li>
+<li>(Unfortunately, read and triage access is often not sufficient for us.)</li>
+</ul>
+</li>
+</ul>
+<p>We also enumerated a number of <a href="https://github.com/rust-lang/wg-governance/blob/master/minutes/2019.12.03.md#action-items">action items</a> to putting this policy
+in to practice. We'll be revisiting the topic periodically to check on
+progress.</p>
 
     </div>
   </div>

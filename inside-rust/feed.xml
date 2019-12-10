@@ -10,8 +10,74 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-12-09T16:09:10Z</updated>
+    <updated>2019-12-10T22:01:58Z</updated>
 
+    
+    <entry>
+        <title>Governance Working Group Update</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/12/10/governance-wg-meeting.html" type="text/html" title="Governance Working Group Update" />
+        <published>2019-12-10T00:00:00Z</published>
+        <updated>2019-12-10T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/12/10/governance-wg-meeting.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/12/10/governance-wg-meeting.html">&lt;p&gt;Hello everyone! The governance working group met last week to discuss
+writing out a policy for access privileges on our Github
+repositories. This blog post summarizes that meeting and also
+announces the topic of our next meeting, which takes place on Tuesday,
+December 17, 2019 (&lt;a href=&quot;https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=MnNuZDc0NzkzYTBkcDNzY2FkbWgzNjk3a2hfMjAxOTEyMTdUMjIwMDAwWiBtb3ppbGxhLmNvbV85YzZmYzNsNmJoZzhiY3A4Y2FmcnZrM29mNEBn&amp;tmsrc=mozilla.com_9c6fc3l6bhg8bcp8cafrvk3of4%40group.calendar.google.com&amp;scp=ALL&quot;&gt;calendar event&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Also, this week we have a &lt;a href=&quot;https://youtu.be/CyYwretwM8E&quot;&gt;video recording
+available&lt;/a&gt;. (We're going to generally
+try and record meetings when possible.)&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#next-meeting&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;next-meeting&quot;&gt;&lt;/a&gt;Next meeting&lt;/h2&gt;
+&lt;p&gt;The next meeting will be discussing project groups and their integration into
+the lang team. This is building on a few different posts and ideas:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;XAMPPRocky's draft RFC &lt;a href=&quot;https://github.com/rust-lang/wg-governance/blob/master/draft-rfcs/working-group-terminology.md&quot;&gt;clarifying our terminology around working groups&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;My &lt;a href=&quot;http://smallcultfollowing.com/babysteps/blog/2019/09/11/aic-shepherds-3-0/&quot;&gt;Shepherds 3.0&lt;/a&gt; blog post&lt;/li&gt;
+&lt;li&gt;The embedded working group's &lt;a href=&quot;https://github.com/rust-embedded/wg/pull/378&quot;&gt;shepherded projects RFC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;My recent blog post about &lt;a href=&quot;http://smallcultfollowing.com/babysteps/blog/2019/12/03/aic-improving-the-pre-rfc-process/&quot;&gt;an improved pre-RFC
+process&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;&lt;a href=&quot;#access-rights-policy&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;access-rights-policy&quot;&gt;&lt;/a&gt;Access rights policy&lt;/h2&gt;
+&lt;p&gt;I'll summarize our conclusions here. Consult the &lt;a href=&quot;https://github.com/rust-lang/wg-governance/&quot;&gt;wg-governance&lt;/a&gt;
+repository to find more &lt;a href=&quot;https://github.com/rust-lang/wg-governance/blob/master/minutes/2019.12.03.md&quot;&gt;detailed minutes&lt;/a&gt; from our conversation.
+The key conclusions were:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Where possible, we should stick to a single org (&lt;a href=&quot;https://github.com/rust-community/&quot;&gt;&lt;code&gt;rust-lang&lt;/code&gt;&lt;/a&gt;).
+&lt;ul&gt;
+&lt;li&gt;In particular, team-specific organizations like
+&lt;a href=&quot;https://github.com/rust-dev-tools/&quot;&gt;&lt;code&gt;rust-dev-tools&lt;/code&gt;&lt;/a&gt; and &lt;a href=&quot;https://github.com/rust-community/&quot;&gt;&lt;code&gt;rust-community&lt;/code&gt;&lt;/a&gt; ought to be merged
+into &lt;a href=&quot;https://github.com/rust-community/&quot;&gt;&lt;code&gt;rust-lang&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Using a single organization makes it much easier to administrate.&lt;/li&gt;
+&lt;li&gt;Note that we've already deprecated the &lt;a href=&quot;https://github.com/rust-lang-nursery/&quot;&gt;&lt;code&gt;rust-lang-nursery&lt;/code&gt;&lt;/a&gt; org&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;As an exception, we will for now continue having each domain working group
+operate outside of its own org (e.g., &lt;a href=&quot;https://github.com/rust-embedded/wg&quot;&gt;&lt;code&gt;rust-embedded&lt;/code&gt;&lt;/a&gt;). Those orgs
+are quite active and have a diverse membership and we don't want to
+disturb that for now.
+&lt;ul&gt;
+&lt;li&gt;However, it would be good if each such org added the &lt;code&gt;rust-lang-owner&lt;/code&gt; bot
+as an owner, so that the rust infra team has access.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;For repositories, we will avoid giving access to individuals, and instead try to
+give access only to entities (teams, working groups, etc) that are created and
+managed by the Rust &lt;a href=&quot;https://github.com/rust-lang/team&quot;&gt;team&lt;/a&gt; repository.
+&lt;ul&gt;
+&lt;li&gt;In general, it is not recommended to give owner or admin access; write access suffices.&lt;/li&gt;
+&lt;li&gt;(Unfortunately, read and triage access is often not sufficient for us.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We also enumerated a number of &lt;a href=&quot;https://github.com/rust-lang/wg-governance/blob/master/minutes/2019.12.03.md#action-items&quot;&gt;action items&lt;/a&gt; to putting this policy
+in to practice. We'll be revisiting the topic periodically to check on
+progress.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Niko Matsakis</name>
+        </author>
+    </entry>
     
     <entry>
         <title>Announcing the Docs.rs Team</title>
@@ -620,52 +686,6 @@ Each week, we have general announcements from the team followed by check-ins fro
 
         <author>
             <name>Wesley Wiser</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>2019-11-12 Infrastructure Team Meeting</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/18/infra-team-meeting.html" type="text/html" title="2019-11-12 Infrastructure Team Meeting" />
-        <published>2019-11-18T00:00:00Z</published>
-        <updated>2019-11-18T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/11/18/infra-team-meeting.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/18/infra-team-meeting.html">&lt;p&gt;Meeting run by pietroalbini. Minutes written by pietroalbini.
-Attending: alexcrichton, kennytm, Mark-Simulacrum, pietroalbini, sgrif, shepmaster
-&lt;a href=&quot;https://discordapp.com/channels/442252698964721669/443148319431065610/643872655312683018&quot;&gt;Start of the conversation&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#rust-114.0-cargo-artifacts-on-the-rust-lang-ci-s3-bucket&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;rust-114.0-cargo-artifacts-on-the-rust-lang-ci-s3-bucket&quot;&gt;&lt;/a&gt;Rust 1.14.0 Cargo artifacts on the rust-lang-ci S3 bucket&lt;/h2&gt;
-&lt;p&gt;Following on last meeting’s topics, pietroalbini investigated whether it would
-be possible to redirect requests for Cargo 1.14.0 from the &lt;code&gt;rust-lang-ci&lt;/code&gt; S3
-bucket to our CDN. The answer is no, as the S3 support for redirects requires a
-different endpoint than the one included in the manifest. The two main courses
-of action were to do nothing (keeping the files in the &lt;code&gt;rust-lang-ci&lt;/code&gt; S3 bucket),
-or to rewrite and resign the manifest of Rust 1.14.0 to point to the CDN.&lt;/p&gt;
-&lt;p&gt;Mark-Simulacrum was in favor of doing nothing, but pietroalbini pointed out
-keeping releases in two different places will make mirroring and caching
-efforts more complex, as mirror authors will have to special-case a separate
-domain just for a release. We then decided to rewrite and resign the manifest.&lt;/p&gt;
-&lt;p&gt;shepmaster proposed to add a test somewhere to ensure this doesn’t happen
-again, but nobody on the team had the time to do this. If someone is interested
-please ask in the infra channel.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#deduplicating-ci-configuration-on-github-actions&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;deduplicating-ci-configuration-on-github-actions&quot;&gt;&lt;/a&gt;Deduplicating CI configuration on GitHub Actions&lt;/h2&gt;
-&lt;p&gt;One issue about GitHub Actions is it doesn’t allow to include shared pieces of
-configuration into workflows, forcing us to duplicate (for example) the steps
-needed to complete a build. pietroalbini investigated a few ways to work around
-the limitation, and the options he presented during the meeting are either
-writing our own configuration format and having a tool generate the GitHub
-Actions configuration from it, or duplicating the configuration manually and
-having a tool to ensure the manually duplicated things don’t diverge.&lt;/p&gt;
-&lt;p&gt;The rest of the team expressed concerns with generating the configuration, as
-using the generator adds even more complexity to our already complex CI. On the
-other hand pietroalbini didn’t like the tool to ensure the configuration
-doesn’t diverge, as that would make changes to the CI configuration harder for
-the people doing it. The agreement in the meeting is that pietroalbini will try
-to create other proof of concepts, hoping to find a better solution.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#new-server-for-perf&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;new-server-for-perf&quot;&gt;&lt;/a&gt;New server for perf&lt;/h2&gt;
-&lt;p&gt;alexcrichton didn’t hear back from Hetzner about the new perf server yet.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Pietro Albini</name>
         </author>
     </entry>
     
