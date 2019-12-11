@@ -10,8 +10,31 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-12-10T22:01:58Z</updated>
+    <updated>2019-12-11T09:35:15Z</updated>
 
+    
+    <entry>
+        <title>2019-12-10 Infrastructure Team Meeting</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/12/11/infra-team-meeting.html" type="text/html" title="2019-12-10 Infrastructure Team Meeting" />
+        <published>2019-12-11T00:00:00Z</published>
+        <updated>2019-12-11T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/12/11/infra-team-meeting.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/12/11/infra-team-meeting.html">&lt;p&gt;Meeting run by pietroalbini. Minutes written by pietroalbini.&lt;br /&gt;
+Attending: aidanhs, kennytm, Mark-Simulacrum, pietroalbini, shepmaster&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#feedback-on-the-rfc-2837-draft&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;feedback-on-the-rfc-2837-draft&quot;&gt;&lt;/a&gt;Feedback on the RFC 2837 draft&lt;/h2&gt;
+&lt;p&gt;pietroalbini gave the team a draft of &lt;a href=&quot;https://github.com/rust-lang/rfcs/pull/2837&quot;&gt;RFC
+2837&lt;/a&gt; (then published shortly
+after the meeting), about the demotion of Apple 32bit targets to Tier 3 from
+Tier 1 and 2 (see the RFC for the motivations leading to that). The team was
+largely onboard with it, and everyone gave useful feedback, which was
+incorporated into the RFC text. Kinnison also jumped in to clarify the rustup
+behavior when a target is removed.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Pietro Albini</name>
+        </author>
+    </entry>
     
     <entry>
         <title>Governance Working Group Update</title>
@@ -545,147 +568,6 @@ the coming days.&lt;/p&gt;
 
         <author>
             <name>Pietro Albini</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>2019-11-14 Compiler Team Triage Meeting</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/19/compiler-team-meeting.html" type="text/html" title="2019-11-14 Compiler Team Triage Meeting" />
-        <published>2019-11-19T00:00:00Z</published>
-        <updated>2019-11-19T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/11/19/compiler-team-meeting.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/19/compiler-team-meeting.html">&lt;p&gt;The compiler team had our weekly triage meeting on 2019-11-14.
-You can find the &lt;a href=&quot;https://rust-lang.github.io/compiler-team/minutes/triage-meeting/2019-11-14/&quot;&gt;minutes&lt;/a&gt; on the &lt;a href=&quot;https://github.com/rust-lang/compiler-team&quot;&gt;compiler-team&lt;/a&gt; repository.
-Each week, we have general announcements from the team followed by check-ins from two of the compiler team working groups.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#announcements&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;announcements&quot;&gt;&lt;/a&gt;Announcements&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Request for assistance: &amp;quot;Rustc panics (NoSolution): could not prove Binder(projection soup)&amp;quot; &lt;a href=&quot;https://github.com/rust-lang/rust/issues/65581&quot;&gt;#65581&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Request for assistance: &amp;quot;Rust 1.38 regressions weren't fully triaged&amp;quot; &lt;a href=&quot;https://github.com/rust-lang/rust/issues/65577&quot;&gt;#65577&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Request for assistance: &amp;quot;Miscompilation with target-cpu=znver1 (AMD Ryzen 1000/2000 series) on Windows + LLVM 9.&amp;quot; &lt;a href=&quot;https://github.com/rust-lang/rust/issues/63959&quot;&gt;#63959&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/cjgillot&quot;&gt;@cjgillot&lt;/a&gt; replaced a lot of TypeFoldable impls with a derive &lt;a href=&quot;https://github.com/rust-lang/rust/pull/66384&quot;&gt;#66384&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The Infra team has finished evaluating GitHub Actions and we're switching!&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;This will have a signficant, positive impact on CI build time.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/centril&quot;&gt;@centril&lt;/a&gt; is fixing useless &lt;code&gt;&amp;lt;std macros&amp;gt;&lt;/code&gt; spans &lt;a href=&quot;https://github.com/rust-lang/rust/pull/66364&quot;&gt;#66364&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;&lt;a href=&quot;#working-group-sync&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;working-group-sync&quot;&gt;&lt;/a&gt;Working group sync&lt;/h2&gt;
-&lt;p&gt;This week we heard from three working groups because we ran out of time in the previous meeting.&lt;/p&gt;
-&lt;h3&gt;&lt;a href=&quot;#wg-polonius&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;wg-polonius&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://rust-lang.github.io/compiler-team/working-groups/polonius/&quot;&gt;wg-polonius&lt;/a&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Made a lot of progress on the completeness goals with move/initialization errors and subset errors both getting close to completion.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Fixed the last failure in the rustc test suite.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;There are still the same 2 OOMs as last time, we haven't had much time to look at those yet.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Made diagnostics output match NLL in a lot more cases.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Did some cleanup in our terminology by picking better names for our atoms hopefully making it clearer in the process, and more work is planned here.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&amp;quot;origin&amp;quot; instead of &amp;quot;region&amp;quot;&lt;/li&gt;
-&lt;li&gt;&amp;quot;path&amp;quot; instead of &amp;quot;MovePath&amp;quot;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;There is a &lt;a href=&quot;https://rust-lang.github.io/polonius/&quot;&gt;polonius book&lt;/a&gt; now! It's sparse at the moment but more documentation work is in-flight and planned.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The exploration and prototype on the rules offering more flow-sensitive precision for the analysis has also progressed a lot.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;There's also been some refactoring, and quite a bit of work on performance. Since the latter can step on the other work and vice-versa, we decided to focus on completeness first, and then after that has been achieved, re-adapt and land the optimization work.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/nikomatsakis&quot;&gt;@nikomatsakis&lt;/a&gt; did a presentation on Polonius at RustBelt Rust. &lt;a href=&quot;https://nikomatsakis.github.io/rust-belt-rust-2019/&quot;&gt;Slides&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/albins&quot;&gt;@albins&lt;/a&gt; has finished their master's thesis and is currently rewriting most of the &lt;a href=&quot;https://rust-lang.zulipchat.com/user_uploads/4715/ufu5BGNrkzVbV8FtkK3Tco6M/Albins-Thesis-draft-version.pdf&quot;&gt;draft&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;We hope to have a &amp;quot;polonius work week&amp;quot; at the end of November to push the in-progress work over the finish line together.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;&lt;a href=&quot;#wg-self-profile&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;wg-self-profile&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://rust-lang.github.io/compiler-team/working-groups/self-profile/&quot;&gt;wg-self-profile&lt;/a&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;We've nearly completed our long standing MVP goal!&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/mark-simulacrum&quot;&gt;@simulacrum&lt;/a&gt; has done some nice work to polish the integration with perf.rlo&lt;/li&gt;
-&lt;li&gt;We've added tracking for all the events we're aware of that should be traced with the exception of trait selection.
-&lt;ul&gt;
-&lt;li&gt;We could really use some input as to what would be helpful to track!&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/michaelwoerister&quot;&gt;@mw&lt;/a&gt; has been working on some changes to the binary format we record events in.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The new format is more compact so results in a smaller trace file and hopefully less runtime overhead.&lt;/li&gt;
-&lt;li&gt;The new format is also more amenable to recording query keys, which is a highly requested feature.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/wesleywiser&quot;&gt;@wesleywiser&lt;/a&gt; has added some crate level docs to make getting into the code easier.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/wesleywiser&quot;&gt;@wesleywiser&lt;/a&gt; also added code to record process id, start time, and arguments to the trace file which we've started using.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/andjo403&quot;&gt;@andjo403&lt;/a&gt; has been a roll with a lot of great PRs!&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;We now have a dedicated tool for generating flamegraphs directly so you don't have to use the Perl scripts anymore.&lt;/li&gt;
-&lt;li&gt;Some internal refactoring that makes adding new tools easier.&lt;/li&gt;
-&lt;li&gt;Lots of work on the Chromium dev tools exporter:
-&lt;ul&gt;
-&lt;li&gt;New option to collapse disjoint threads so it's a little more manageable&lt;/li&gt;
-&lt;li&gt;New option to filter out small events under a configurable threshold (necessary for very large compilations)&lt;/li&gt;
-&lt;li&gt;You can now have multiple crate compilations in the same export file. This is similar to what cargo build -Z timings can do but much more detailed.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;&lt;a href=&quot;#wg-rls-20&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;wg-rls-20&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://rust-lang.github.io/compiler-team/working-groups/rls-2.0/&quot;&gt;wg-rls-2.0&lt;/a&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Work is procedding on splitting core of rust-analyzer into crates.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Find usages is implemented.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Macro expansion now can map source ranges to expanded ranges, so goto def correctly goes &amp;quot;inside&amp;quot; macro call.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;More chalk an type inference work, specifically, support for closures.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;There's ongoing discussion about the general planning about rustc, rls, and rust-analyzer.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-
-        <author>
-            <name>Wesley Wiser</name>
         </author>
     </entry>
     
