@@ -10,8 +10,143 @@
         <name>Maintained by the Rust Teams.</name>
         <uri>https://github.com/rust-lang/blog.rust-lang.org/</uri>
     </author>
-    <updated>2019-12-11T09:35:15Z</updated>
+    <updated>2019-12-18T10:56:00Z</updated>
 
+    
+    <entry>
+        <title>Bisecting Rust Compiler Regressions with cargo-bisect-rustc</title>
+        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/12/18/bisecting-rust-compiler.html" type="text/html" title="Bisecting Rust Compiler Regressions with cargo-bisect-rustc" />
+        <published>2019-12-18T00:00:00Z</published>
+        <updated>2019-12-18T00:00:00Z</updated>
+        <id>https://blog.rust-lang.org/inside-rust/2019/12/18/bisecting-rust-compiler.html</id>
+        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/12/18/bisecting-rust-compiler.html">&lt;p&gt;Let's say that you've just updated the Rust compiler version and have
+tried to compile your application and see a failure that wasn't there
+before. That's likely due to a regression in the compiler.  We've just
+released
+&lt;a href=&quot;https://github.com/rust-lang/cargo-bisect-rustc&quot;&gt;&lt;code&gt;cargo-bisect-rustc&lt;/code&gt;&lt;/a&gt;,
+a tool that makes it super easy to find exactly when the regression
+happened.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cargo-bisect-rustc&lt;/code&gt; automatically downloads rustc artifacts and tests
+them against a project you provide until it finds the regression. At
+minimum, it will identify the nightly release which triggered the
+regression; but if the regression occurred in the last 168 days, it will
+even figure out the exact PR, which is often very useful in helping us
+fix the problem.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cargo-bisect-rustc&lt;/code&gt; was created originally by Mark Rousskov. I extended
+it recently to make it easier to use.&lt;/p&gt;
+&lt;p&gt;To install the tool run:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;cargo install cargo-bisect-rustc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;&lt;a href=&quot;#finding-a-regression&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;finding-a-regression&quot;&gt;&lt;/a&gt;Finding a regression&lt;/h2&gt;
+&lt;p&gt;We are going to use &lt;a href=&quot;https://github.com/rust-lang/rust/issues/64945&quot;&gt;this &amp;quot;old&amp;quot; reported rustc
+regression&lt;/a&gt; as an
+example:&lt;/p&gt;
+&lt;p&gt;Our application consists only of this file:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;pub struct Slice&amp;lt;'a, T&amp;gt;(&amp;amp;'a [T]);
+
+impl&amp;lt;'a, T: 'a&amp;gt; Slice&amp;lt;'a, T&amp;gt; {
+    pub const EMPTY: Self = Slice ({
+        let v: &amp;amp;[T] = &amp;amp;[];
+        v
+    });
+}
+
+fn main() {
+    let s = Slice(&amp;amp;[1, 2]);
+    assert!(s.0 != Slice::EMPTY.0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then we run &lt;code&gt;cargo bisect-rustc --end=2019-10-02&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Since this bug was fixed on 2019-10-03, we're using 2019-10-02 as the
+end We need to provide the end point for this particular example, given
+that this bug was fixed on 2019-10-03, we're using 2019-10-02 as the end
+point. If you don't provide an ending point it assumes that the end
+point is today's nightly or your currently installed nightly. If you
+don't provide a start point as we're doing it tries to find one by
+regressing in time.  If you know if a failing starting point it would be
+faster if you just provide that one.&lt;/p&gt;
+&lt;p&gt;By default it will run &lt;code&gt;cargo build&lt;/code&gt; in the project and check whether or
+not it fails. After finding a nightly that has regressed it is going to
+automatically search for the commit that introduced the regression.&lt;/p&gt;
+&lt;p&gt;Let's see the tool in action:&lt;/p&gt;
+&lt;p&gt;The tool starts by downloading various nightly compilers, trying to find
+a date when the program worked ...&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;checking nightly-2019-10-02
+std for x86_64-unknown-linux-gnu: 172.87 MB / 172.87 MB [===============================================================================================================================================================] 100.00 % 10.67 MB/s uninstalling nightly-2019-10-02
+checking nightly-2019-09-30
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once it has one failing and working point it starts bisecting ...&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;std for x86_64-unknown-linux-gnu: 173.43 MB / 173.43 MB [===============================================================================================================================================================] 100.00 % 12.82 MB/s uninstalling nightly-2019-09-29
+tested nightly-2019-09-29, got No
+searched toolchains nightly-2019-09-28 through nightly-2019-09-30
+regression in nightly-2019-09-30
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once it finds a nightly, it starts to search the PRs that went into that
+nightly build ...&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;looking for regression commit between 2019-09-30 and 2019-09-29
+fetching commits from 488381ce9ef0ceabe83b73127c659e5d38137df0 to 8431f261dd160021b6af85916f161a13dd101ca0
+...
+searched toolchains 488381ce9ef0ceabe83b73127c659e5d38137df0 through 8431f261dd160021b6af85916f161a13dd101ca0
+regression in 0bbab7d99dde8620604fb265706dc8bff20345a7
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, when it finds the PR that broke the compiler, it generates a
+bug report that you can copy and paste!&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;==================================================================================
+= Please open an issue on Rust's github repository                               =
+= https://github.com/rust-lang/rust/issues/new                                   =
+= Below you will find a text that would serve as a starting point of your report =
+==================================================================================
+
+# Regression found in the compiler
+
+searched nightlies: from nightly-2019-09-28 to nightly-2019-09-30
+regressed nightly: nightly-2019-09-30
+searched commits: from https://github.com/rust-lang/rust/commit/488381ce9ef0ceabe83b73127c659e5d38137df0 to https://github.com/rust-lang/rust/commit/8431f261dd160021b6af85916f161a13dd101ca0
+regressed commit: https://github.com/rust-lang/rust/commit/0bbab7d99dde8620604fb265706dc8bff20345a7
+source code: URL OF A REPOSITORY THAT REPRODUCES THE ERROR
+
+## Instructions
+
+Please give the steps for how to build your repository (platform, system dependencies, etc.)
+## Error
+
+&amp;lt;details&amp;gt;&amp;lt;summary&amp;gt;COLLAPSIBLE ERROR STACKTRACE&amp;lt;/summary&amp;gt;
+&amp;lt;p&amp;gt;
+
+```bash
+Paste the error the compiler is giving
+```
+
+&amp;lt;/p&amp;gt;&amp;lt;/details&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This tells us that the regression started with
+&lt;a href=&quot;https://github.com/rust-lang/rust/commit/0bbab7d99dde8620604fb265706dc8bff20345a7&quot;&gt;&lt;code&gt;0bbab7d99dde8620604fb265706dc8bff20345a7&lt;/code&gt;&lt;/a&gt;
+and you can look at the git log to find the PR. In this case is
+&lt;a href=&quot;https://github.com/rust-lang/rust/pull/64470&quot;&gt;#64470&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#call-for-action-try-the-tool&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;call-for-action-try-the-tool&quot;&gt;&lt;/a&gt;Call for action: try the tool&lt;/h2&gt;
+&lt;p&gt;Please, give this tool a try and if you find yourself updating your
+application and it stops building, it's likely that you're hitting a
+regression. As you can see at the end of the execution of the tool, if a
+regression is found the tool gives you a report that you can paste on a
+github issue on the &lt;a href=&quot;https://github.com/rust-lang/rust&quot;&gt;Rust repo&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;&lt;a href=&quot;#call-for-action-get-involved-in-the-development-of-cargo-bisect-rustc&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;call-for-action-get-involved-in-the-development-of-cargo-bisect-rustc&quot;&gt;&lt;/a&gt;Call for action: get involved in the development of cargo-bisect-rustc&lt;/h2&gt;
+&lt;p&gt;There are also a lot of things to improve in the tool and a lot of bugs
+to fix. There are a bunch of reported issues that are easy to fix,
+&lt;a href=&quot;https://github.com/rust-lang/cargo-bisect-rustc/issues&quot;&gt;check them
+out&lt;/a&gt;.  You can
+also, reach us out. You can find me and the rest of the compiler
+contributors and members in &lt;a href=&quot;https://rust-lang.zulipchat.com/#narrow/stream/217417-t-compiler.2Fcargo-bisect-rustc&quot;&gt;Zulip's #t-compiler/cargo-bisect-rustc
+stream&lt;/a&gt;.
+Sign up there if you haven't already and do not hesitate to ask
+questions or even to send me a direct message if you don't know where to
+start.&lt;/p&gt;
+</content>
+
+        <author>
+            <name>Santiago Pastorino</name>
+        </author>
+    </entry>
     
     <entry>
         <title>2019-12-10 Infrastructure Team Meeting</title>
@@ -519,55 +654,6 @@ intervene.&lt;/p&gt;
 
         <author>
             <name>Niko Matsakis</name>
-        </author>
-    </entry>
-    
-    <entry>
-        <title>2019-11-19 Infrastructure Team Meeting</title>
-        <link rel="alternate" href="https://blog.rust-lang.org/inside-rust/2019/11/19/infra-team-meeting.html" type="text/html" title="2019-11-19 Infrastructure Team Meeting" />
-        <published>2019-11-19T00:00:00Z</published>
-        <updated>2019-11-19T00:00:00Z</updated>
-        <id>https://blog.rust-lang.org/inside-rust/2019/11/19/infra-team-meeting.html</id>
-        <content type="html" xml:base="https://blog.rust-lang.org/inside-rust/2019/11/19/infra-team-meeting.html">&lt;p&gt;Meeting run by pietroalbini. Minutes written by pietroalbini.&lt;br /&gt;
-Attending: alexcrichton, kennytm, Mark-Simulacrum, pietroalbini, shepmaster&lt;br /&gt;
-&lt;a href=&quot;https://discordapp.com/channels/442252698964721669/443148319431065610/646409370095190016&quot;&gt;Start of the conversation&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#migrating-cratesio-behind-cloudfront&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;migrating-cratesio-behind-cloudfront&quot;&gt;&lt;/a&gt;Migrating crates.io behind CloudFront&lt;/h2&gt;
-&lt;p&gt;While static.crates.io (hosting the source code of all the published crates) is
-behind CloudFront, that’s not true today for the crates.io web application.
-This causes problems because crates.io is hosted on Heroku, which requires
-pointing a CNAME to Heroku’s DNS. Unfortunately crates.io doesn’t use a
-subdomain, which prevents us from using CNAMEs. All our DNS zones are on AWS
-Route53, but AWS only supports CNAMEs on the apex pointing to other AWS
-resources. Because of that, the crates.io DNS was managed on a different
-service until today, causing maintenance issues on our end.&lt;/p&gt;
-&lt;p&gt;The solution we’re working torwards is to put CloudFront in front of crates.io,
-and that will finally allow us to migrate the crates.io domain to AWS.
-pietroalbini is finishing the last infra touches, and we expect to deploy the
-changes in the coming days.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#dns-management-with-terraform&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;dns-management-with-terraform&quot;&gt;&lt;/a&gt;DNS management with Terraform&lt;/h2&gt;
-&lt;p&gt;pietroalbini announced to the rest of the team that he started working on
-migrating the DNS records of our domains to Terraform. He already migrated the
-zones of &lt;a href=&quot;https://github.com/rust-lang/simpleinfra/blob/master/terraform/services/dns/cratesio.com.tf&quot;&gt;cratesio.com&lt;/a&gt; and &lt;a href=&quot;https://github.com/rust-lang/simpleinfra/blob/master/terraform/services/dns/crates.io.tf&quot;&gt;crates.io&lt;/a&gt;, and he plans to migrate the other ones
-over the coming weeks. pietroalbini also wrote &lt;a href=&quot;https://forge.rust-lang.org/infra/docs/dns.html&quot;&gt;documentation&lt;/a&gt; on this setup.&lt;/p&gt;
-&lt;h2&gt;&lt;a href=&quot;#another-github-actions-ci-configuration-prototype&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot; id=&quot;another-github-actions-ci-configuration-prototype&quot;&gt;&lt;/a&gt;Another GitHub Actions CI configuration prototype&lt;/h2&gt;
-&lt;p&gt;pietroalbini continued his investigation into another prototype for our new
-GitHub Actions configuration. To reiterate, GitHub Actions doesn’t support
-templates or includes, so the infrastructure team is looking into a way to
-reduce duplication between our pipelines.&lt;/p&gt;
-&lt;p&gt;Since the two prototypes presented at last week’s meeting weren’t liked by all
-the team, pietroalbini continued experimenting, and the prototype presented
-this week was based around YAML anchors, a standard YAML feature to reuse parts
-of data inside a single file. Unfortunately GitHub Actions explicitly disables
-YAML anchors, so pietroalbini wrote a small tool that pre-generates the
-expanded configuration file and commits it into the repo.&lt;/p&gt;
-&lt;p&gt;The team liked this approach much more, as it doesn’t introduce any new
-configuration syntax while keeping the configuration files in a manageable
-state. pietroalbini is going to polish the prototype and open a PR for it in
-the coming days.&lt;/p&gt;
-</content>
-
-        <author>
-            <name>Pietro Albini</name>
         </author>
     </entry>
     
